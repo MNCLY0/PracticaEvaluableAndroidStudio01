@@ -19,7 +19,7 @@
             android:layout_weight="0.40">
 
             <TextView
-                android:id="@+id/logintexto"
+                android:id="@+id/loginuser"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="end|center_vertical"
@@ -27,17 +27,14 @@
                 android:paddingEnd="10dp"
                 android:textSize="20sp"/>
         </FrameLayout>
-        <com.google.android.material.textfield.TextInputLayout
+        <EditText
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight=".70"
-             >
+            android:hint="usuario"
+            >
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:hint="usuario" />
-        </com.google.android.material.textfield.TextInputLayout>
+        </EditText>
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
@@ -45,6 +42,7 @@
         android:orientation="horizontal"
         android:paddingLeft="60dp"
         android:paddingRight="60dp">
+
         <FrameLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
@@ -59,18 +57,14 @@
                 android:paddingEnd="10dp"
                 android:textSize="20sp"/>
         </FrameLayout>
-        <com.google.android.material.textfield.TextInputLayout
+        <EditText
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight=".70"
+            android:hint="password"
             >
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:hint="password"
-                android:inputType="textPassword"/>
-        </com.google.android.material.textfield.TextInputLayout>
+        </EditText>
     </LinearLayout>
 
     <LinearLayout
@@ -83,7 +77,7 @@
         >
 
         <Button
-            android:id="@+id/button2"
+            android:id="@+id/botonAceptar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight=".5"
@@ -97,6 +91,17 @@
             android:layout_weight=".5"
             android:text="Morir"
             android:layout_margin="10dp"/>
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/textodebug"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+        </TextView>
 
     </LinearLayout>
 

@@ -1,23 +1,15 @@
 package com.example.prcticaevaluableapp
 
-import android.app.Activity
-import android.content.Intent
 import android.os.Bundle
-import android.view.Menu
-import android.view.MenuItem
-import android.view.View
+import android.widget.EditText
 import android.widget.TextView
-import androidx.activity.enableEdgeToEdge
-import androidx.activity.result.ActivityResult
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import androidx.viewpager.widget.ViewPager
 import com.google.android.material.tabs.TabLayout
 
-class main_menu : AppCompatActivity() {
-    private lateinit var ventanaDeslizante: ViewPager
+class Main_menu : AppCompatActivity() {
+    private lateinit var inputUser: EditText
+    private lateinit var inputPassword: EditText
     private lateinit var tablayout: TabLayout
     private lateinit var txtTexto: TextView
 
@@ -26,10 +18,10 @@ class main_menu : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main_menu)
 
-//        //obtiene las referencias de los objetos layout
+        //obtiene las referencias de los objetos layout
 //        ventanaDeslizante = findViewById(R.id.viewpager)
-//        tablayout = findViewById(R.id.tabLayout)
-//        txtTexto = findViewById(R.id.txtTextoInformacion)
+        tablayout = findViewById(R.id.tabLayout)
+        inputUser = findViewById(R.id.loginuser)
 //
 //        // Inicia el controlador deslizante de ventanas que recibe como parámetro un objeto supportFragmentManager
 //        //Ese objeto gestiona los fragmentos en las actividades.

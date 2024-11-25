@@ -1,83 +1,50 @@
 package com.example.prcticaevaluableapp
 
 import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
-
+import android.widget.Button
+import android.widget.EditText
 import android.widget.TextView
-import androidx.viewpager.widget.ViewPager
-import com.google.android.material.tabs.TabLayout
+import androidx.appcompat.app.AppCompatActivity
 
 class MainActivity : AppCompatActivity() {
 
-    private lateinit var ventanaDeslizante: ViewPager
-    private lateinit var tablayout: TabLayout
-    private lateinit var txtTexto: TextView
+    private lateinit var inputUser: EditText
+    private lateinit var inputPassword: EditText
+
+    private lateinit var botonAceptar: Button
+
+    private lateinit var textoDebug: TextView
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
 
-//        //obtiene las referencias de los objetos layout
-//        ventanaDeslizante = findViewById(R.id.viewpager)
-//        tablayout = findViewById(R.id.tabLayout)
-//        txtTexto = findViewById(R.id.txtTextoInformacion)
-//
-//        // Inicia el controlador deslizante de ventanas que recibe como parámetro un objeto supportFragmentManager
-//        //Ese objeto gestiona los fragmentos en las actividades.
-//        //En Java seria equivalente a this.getSupportFragmentManager()
-//        val controlador = ControladorVentanasDeslizantes(supportFragmentManager)
-//
-//        controlador.addFragment(CorreosFragment(), "Correos")
-//        controlador.addFragment(ContactosFragment(), "Contactos")
-//
-//        //Agregar al controlador el deslizador de vistas
-//        //Estamos siciendo que el comprotamiento del viewPager(widget que desliza)
-//        //sea el del controlador
-//        ventanaDeslizante.adapter = controlador
-//        //Vincula el controlasor al tablayout
-//        tablayout.setupWithViewPager(ventanaDeslizante)
-//
-//
-//        tablayout.getTabAt(0)?.setIcon(R.drawable.baseline_mail_outline_24)
-//        tablayout.getTabAt(1)?.setIcon(R.drawable.baseline_person_outline_24)
+        inputUser = findViewById(R.id.loginuser)
+        inputPassword = findViewById(R.id.loginpassword)
+        botonAceptar = findViewById(R.id.botonAceptar)
+        textoDebug = findViewById(R.id.textodebug)
+
+        botonAceptar.setOnClickListener{
+            if (comprobarLogin())
+            {
+                textoDebug.setText("Inicio de sesion correcto")
+            }
+            else
+            {
+                textoDebug.setText("Inicio de sesion incorrecto")
+            }
+        }
+
     }
 
-    //    Ponemos el menus
-//    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-//        menuInflater.inflate(R.menu.menu_main, menu)
-//        return true
-//    }
-//
-//    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-//        return when (item.itemId) {
-//            R.id.action_settings -> true
-//
-//            R.id.btnInformacionApp -> {
-//                lanzarInformacionDe()
-//                true
-//            }
-//            else -> super.onOptionsItemSelected(item)
-//        }
-//    }
-//
-//    private fun lanzarInformacionDe(view: View? = null) {
-//        val i = Intent(this, InformacionLegalActivity::class.java)
-////        startActivity(i)
-//        resultLauncher.launch(i)
-//    }
-//
-//    var resultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){
-//            result: ActivityResult ->
-//        val nombre = result.data?.getStringExtra("Mensaje")
-//        if (result.resultCode == Activity.RESULT_OK) {
-//            txtTexto.setText("El usuario ha aceptado los terminos" + " " + nombre)
-//        }
-//        else
-//        {
-//            txtTexto.setText("El usuario no ha aceptado los terminos")
-//        }
-//    }
+    private fun comprobarLogin(): Boolean {
+
+        val nombreUser = inputUser.getText()
+        val passwordUser = inputUser.getText()
+
+        return nombreUser.equals(R.string.usuario) && passwordUser.equals(R.string.password)
+    }
 
 
 }
