@@ -47,10 +47,9 @@ class MainActivity : AppCompatActivity() {
             }
             else
             {
-                textoDebug.setText("Inicio de sesion incorrecto")
+                textoDebug.text = getString(R.string.inicio_de_sesion_incorrecto)
             }
         }
-
     }
 
     private fun comprobarLogin(): Boolean {
@@ -62,7 +61,6 @@ class MainActivity : AppCompatActivity() {
         {
             return users[nombreUser] == passwordUser
         }
-
         return false
     }
 
