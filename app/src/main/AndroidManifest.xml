@@ -13,18 +13,30 @@
         android:theme="@style/Theme.PrácticaEvaluableApp"
         tools:targetApi="31">
         <activity
-            android:name=".Main_menu"
-            android:exported="false" />
-        <activity
             android:name=".MainActivity"
             android:exported="true"
             android:theme="@style/Theme.Material3.DynamicColors.Dark">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".MainMenu"
+            android:exported="false"
+            android:theme="@style/Theme.Material3.DynamicColors.Dark">
+        </activity>
+        <activity
+            android:name=".InformacionAppActivity"
+            android:exported="false"
+            android:theme="@style/Theme.Material3.DynamicColors.Dark">
+        </activity>
+        <activity
+            android:name=".AddHobbieAppActivity"
+            android:exported="false"
+            android:theme="@style/Theme.Material3.DynamicColors.Dark">
+        </activity>
+
     </application>
 
 </manifest>

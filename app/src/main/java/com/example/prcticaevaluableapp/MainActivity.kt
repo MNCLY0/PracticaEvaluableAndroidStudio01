@@ -1,12 +1,17 @@
 package com.example.prcticaevaluableapp
 
+import android.content.Intent
 import android.os.Bundle
+import android.util.ArrayMap
+import android.util.Log
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 
 class MainActivity : AppCompatActivity() {
+
+    private lateinit var users : ArrayMap<String,String>
 
     private lateinit var inputUser: EditText
     private lateinit var inputPassword: EditText
@@ -17,6 +22,14 @@ class MainActivity : AppCompatActivity() {
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
+
+        users = ArrayMap()
+
+        users["Yunaiber"] = "123456"
+        users["Angela"] = "123456"
+        users["Antonia"] = "123456"
+        users["Manuel"] = "123456"
+
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
 
@@ -28,7 +41,9 @@ class MainActivity : AppCompatActivity() {
         botonAceptar.setOnClickListener{
             if (comprobarLogin())
             {
-                textoDebug.setText("Inicio de sesion correcto")
+                val intent = Intent(this,MainMenu::class.java)
+                intent.putExtra("nombreUser",inputUser.getText().toString())
+                startActivity(intent)
             }
             else
             {
@@ -40,10 +55,15 @@ class MainActivity : AppCompatActivity() {
 
     private fun comprobarLogin(): Boolean {
 
-        val nombreUser = inputUser.getText()
-        val passwordUser = inputUser.getText()
+        val nombreUser = inputUser.getText().toString()
+        val passwordUser = inputPassword.getText().toString()
 
-        return nombreUser.equals(R.string.usuario) && passwordUser.equals(R.string.password)
+        if (users[nombreUser] != null)
+        {
+            return users[nombreUser] == passwordUser
+        }
+
+        return false
     }
 
 
