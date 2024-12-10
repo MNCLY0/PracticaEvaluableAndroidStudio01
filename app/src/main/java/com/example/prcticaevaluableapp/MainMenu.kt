@@ -45,12 +45,13 @@ class MainMenu : AppCompatActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
+            //El boton de añadir hobbie, lanza el intent AddHobbieAppActivity
             R.id.bntAddHobbie ->
                 {
                     lanzarAddHobbie()
                     true
                 }
-
+            //El boton de mostrar informacion, lanza el intent InformacionAppActivity
             R.id.btnInformacionApp -> {
                 lanzarInformacionDe()
                 true
