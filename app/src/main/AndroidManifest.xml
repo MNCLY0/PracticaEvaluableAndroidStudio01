@@ -8,14 +8,14 @@
         android:fullBackupContent="@xml/backup_rules"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@mipmap/ic_launcher"
         android:supportsRtl="true"
         android:theme="@style/Theme.PrácticaEvaluableApp"
         tools:targetApi="31">
         <activity
             android:name=".MainActivity"
             android:exported="true"
-            android:theme="@style/Theme.Material3.DynamicColors.Dark">
+            android:theme="@style/Theme.PrácticaEvaluableApp">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -23,18 +23,15 @@
         </activity>
         <activity
             android:name=".MainMenu"
-            android:exported="false"
-            android:theme="@style/Theme.Material3.DynamicColors.Dark">
+            android:exported="false">
         </activity>
         <activity
             android:name=".InformacionAppActivity"
-            android:exported="false"
-            android:theme="@style/Theme.Material3.DynamicColors.Dark">
+            android:exported="false">
         </activity>
         <activity
             android:name=".AddHobbieAppActivity"
-            android:exported="false"
-            android:theme="@style/Theme.Material3.DynamicColors.Dark">
+            android:exported="false">
         </activity>
 
     </application>

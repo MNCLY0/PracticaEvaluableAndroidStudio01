@@ -10,7 +10,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:padding="16dp"
-        android:text="En esta apliación tenemos hobbies y viajes ">
+        android:text="Esta aplicación se compone de hobbies y viajes">
 
     </TextView>
     <LinearLayout

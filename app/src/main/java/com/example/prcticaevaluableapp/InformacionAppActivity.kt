@@ -9,7 +9,6 @@ import androidx.appcompat.app.AppCompatActivity
 class InformacionAppActivity : AppCompatActivity() {
 
     private lateinit var botonAceptar: Button
-    private lateinit var botonCancelar: Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

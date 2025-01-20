@@ -9,7 +9,6 @@
         android:icon="@android:drawable/ic_menu_add"
         android:orderInCategory="1"
         app:showAsAction="always|collapseActionView" />
-
     <item android:id="@+id/btnInformacionApp"
         android:title="Información del usuario"
         android:icon="@android:drawable/ic_menu_info_details"
