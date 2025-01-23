@@ -16,7 +16,7 @@ import java.util.ArrayList;
 public class DBConexion extends SQLiteOpenHelper {
 
     private static final String DB_NAME =  "aplicacionDB";
-    private static final int DB_VERSION = 1;
+    private static final int DB_VERSION = 2;
     //    Tabla contactos
     public static final String TABLA_USUARIO = "usuario";
     public static final String USUARIO_ID = "_id";
@@ -26,7 +26,7 @@ public class DBConexion extends SQLiteOpenHelper {
             "from usuario";
 
     public static final String SENTENCIA_CREACION_TABLA_USUARIO = "create table usuario " +
-            "(_id integer not null, nombre text not null, password text not null);";
+            "(_id integer primary key autoincrement, nombre text not null, password text not null);";
 
     //    public static final String SENTENCIA_ACTUALIZACION_TABLA_CONTACTOS = "UPDATE contactos add colum " +
 //            "(_foto integer)";
@@ -73,38 +73,40 @@ public class DBConexion extends SQLiteOpenHelper {
 //    }
 
 
-    public boolean checkUsuarioLogin(SQLiteDatabase db, Usuario usuario) {
+    public Usuario checkUsuarioLogin(SQLiteDatabase db, Usuario usuario) {
         String query = "select _id, nombre, password from usuario where nombre = ?";
         Cursor c = db.rawQuery(query, new String[]{usuario.getNombre()});
         if (c.moveToFirst()) {
             @SuppressLint("Range") String realPassword = c.getString(c.getColumnIndex("password"));
-            return usuario.getPassword().equals(realPassword);
+            if (usuario.getPassword().equals(realPassword))
+            {
+                @SuppressLint("Range") String nombre = c.getString(c.getColumnIndex("nombre"));
+                @SuppressLint("Range") int id = c.getInt(c.getColumnIndex("_id"));
+                return new Usuario(id,nombre,"");
+            }
         }
         c.close();
-        return false;
+        return new Usuario(0,"","");
     }
 
     //Comprobamos la existencia del usuario
     public boolean checkUsuarioExists(SQLiteDatabase db, Usuario usuario)
     {
-        final String SENTENCIA_CHECK_LOGIN = "select _id, nombre, password " +
-                "from usuario" +
-                "where nombre = " + usuario.getNombre();
-
-        Cursor c = db.rawQuery(SENTENCIA_CHECK_LOGIN, null);
+        String query = "select _id, nombre, password from usuario where nombre = ?";
+        Cursor c = db.rawQuery(query, new String[]{usuario.getNombre()});
         return c.moveToFirst();
     }
 
-    public boolean crearContacto(SQLiteDatabase db, Usuario usuario)
+    public Usuario crearUsuario(SQLiteDatabase db, Usuario usuario)
     {
         if (!checkUsuarioExists(db,usuario))
         {
             ContentValues contentValues = new ContentValues();
-            contentValues.put("id",1);
             contentValues.put("nombre",usuario.getNombre());
             contentValues.put("password",usuario.getPassword());
             db.insert("usuario",null,contentValues);
+            return usuario;
         }
-        return false;
+        return new Usuario(0,"","");
     }
 }

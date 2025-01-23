@@ -1,6 +1,6 @@
 package com.example.prcticaevaluableapp
 
-data class Usuario(
-        val nombre:String,
-        val password:String
-):java.io.Serializable
+class Usuario(val id:Int, val nombre:String, val password:String):java.io.Serializable
+{
+
+}
