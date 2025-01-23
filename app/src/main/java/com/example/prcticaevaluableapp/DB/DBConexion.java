@@ -73,19 +73,14 @@ public class DBConexion extends SQLiteOpenHelper {
 //    }
 
 
-    //Comprobamos que el intento de incio de sesión del usuario es valido
-    public boolean checkUsuarioLogin(SQLiteDatabase db, Usuario usuario)
-    {
-        final String SENTENCIA_CHECK_LOGIN = "select _id, nombre, password " +
-                "from usuario" +
-                "where nombre = " + usuario.getNombre();
-
-        Cursor c = db.rawQuery(SENTENCIA_CHECK_LOGIN, null);
-        if (c.moveToFirst())
-        {
+    public boolean checkUsuarioLogin(SQLiteDatabase db, Usuario usuario) {
+        String query = "select _id, nombre, password from usuario where nombre = ?";
+        Cursor c = db.rawQuery(query, new String[]{usuario.getNombre()});
+        if (c.moveToFirst()) {
             @SuppressLint("Range") String realPassword = c.getString(c.getColumnIndex("password"));
             return usuario.getPassword().equals(realPassword);
         }
+        c.close();
         return false;
     }
 

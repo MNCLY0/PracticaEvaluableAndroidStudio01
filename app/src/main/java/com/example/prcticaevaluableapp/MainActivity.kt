@@ -1,6 +1,7 @@
 package com.example.prcticaevaluableapp
 
 import android.content.Intent
+import android.database.sqlite.SQLiteDatabase
 import android.os.Bundle
 import android.os.Handler
 import android.util.ArrayMap
@@ -10,49 +11,47 @@ import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.example.prcticaevaluableapp.DB.DBConexion
+import com.example.prcticaevaluableapp.DB.DBManager
 import kotlin.system.exitProcess
 
 class MainActivity : AppCompatActivity() {
 
-    private lateinit var users : ArrayMap<String,String>
 
     private lateinit var inputUser: EditText
     private lateinit var inputPassword: EditText
 
     private lateinit var botonAceptar: Button
-    private lateinit var botonSalir: Button
+//    private lateinit var botonSalir: Button
 
     private lateinit var textoDebug: TextView
+
+    var conexion: DBConexion? = null
+    var db: SQLiteDatabase? = null
+
+
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
-        //Creo un diccionario
-        users = ArrayMap()
-
-        //Añado usuario (clave) y contraseña (valor) al diccionario
-        users["Yunaiber"] = "123456"
-        users["Usuario"] = "123456"
-        users["Angela"] = "123456"
-        users["Antonia"] = "123456"
-        users["Manuel"] = "123456"
-
         super.onCreate(savedInstanceState)
+
         setContentView(R.layout.activity_login)
 
         inputUser = findViewById(R.id.loginuser)
         inputPassword = findViewById(R.id.loginpassword)
         botonAceptar = findViewById(R.id.botonAceptar)
-        botonSalir = findViewById(R.id.botonSalir)
+//        botonSalir = findViewById(R.id.botonSalir)
         textoDebug = findViewById(R.id.textodebug)
 
         botonAceptar.setOnClickListener{
             //Si el login es correcto se hace un intent de la clase MainMenu y le paso por put extra el nombre de usuario
             // si no lo es muestro una notificación con mensaje de error
-            if (comprobarLogin())
+            val usuarioCheck = comprobarLogin()
+            if (usuarioCheck.nombre.isNotBlank() and usuarioCheck.password.isNotBlank())
             {
                 val intent = Intent(this,MainMenu::class.java)
-                intent.putExtra("nombreUser",inputUser.getText().toString())
+                intent.putExtra("nombreUser",usuarioCheck.nombre)
                 startActivity(intent)
             }
             else
@@ -61,13 +60,13 @@ class MainActivity : AppCompatActivity() {
                 toast.show()
             }
         }
-        //Boton salir cierra la app
-        botonSalir.setOnClickListener{
-            exitProcess(0)
-        }
+//        //Boton salir cierra la app
+//        botonSalir.setOnClickListener{
+//            exitProcess(0)
+//        }
     }
 
-    private fun comprobarLogin(): Boolean {
+    private fun comprobarLogin(): Usuario {
 
         // Obtengo usuario y contraseña del input
         val nombreUser = inputUser.getText().toString()
@@ -75,11 +74,20 @@ class MainActivity : AppCompatActivity() {
 
         //En caso de que el usuario exista como clave en el diccionario, se comprueba la igualdad en la contraseña
         //en caso contrario se devuelve false sin comprobar la contraseña
-        if (users[nombreUser] != null)
+        if (nombreUser.isNotBlank() and passwordUser.isNotBlank())
         {
-            return users[nombreUser] == passwordUser
+            conexion = DBConexion(this);
+            db = conexion!!.writableDatabase
+
+            val usuariocheck = Usuario(nombreUser,passwordUser)
+
+            if (conexion!!.checkUsuarioLogin(db,usuariocheck))
+            {
+                return usuariocheck
+            }
+
         }
-        return false
+        return Usuario("","")
     }
 
 
