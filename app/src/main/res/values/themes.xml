@@ -2,11 +2,7 @@
 <resources>
 
 <!--    Modifico un poco el tema predeterminado para que herede de Material3.DynamicColors.Dark y cambio el color de algunas cosas-->
-    <style name="Theme.PrácticaEvaluableApp" parent="@style/Theme.Material3.DynamicColors.Dark">
-        <item name="colorPrimary">@color/black</item>.
-        <item name="colorOnPrimary">@color/white</item>
-        <item name="colorPrimaryVariant">@color/black</item>
-        <item name="tabSelectedTextColor">@color/gray</item>
+    <style name="Theme.PrácticaEvaluableApp" parent="@style/Theme.AppCompat.Light">
     </style>
 
 </resources>
