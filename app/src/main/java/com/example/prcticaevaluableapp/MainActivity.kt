@@ -1,20 +1,19 @@
 package com.example.prcticaevaluableapp
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.database.sqlite.SQLiteDatabase
 import android.os.Bundle
-import android.os.Handler
-import android.util.ArrayMap
 import android.util.Log
+import android.webkit.WebSettings
+import android.webkit.WebView
+import android.webkit.WebViewClient
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.compose.material3.TopAppBarDefaults
 import com.example.prcticaevaluableapp.DB.DBConexion
-import com.example.prcticaevaluableapp.DB.DBManager
-import kotlin.system.exitProcess
 
 class MainActivity : AppCompatActivity() {
 
@@ -24,6 +23,7 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var botonAceptar: Button
     private lateinit var botonCrearCuenta: Button
+    private lateinit var webViewGif: WebView
 //    private lateinit var botonSalir: Button
 
     private lateinit var textoDebug: TextView
@@ -34,7 +34,6 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
 
         super.onCreate(savedInstanceState)
-
         setContentView(R.layout.activity_login)
 
         inputUser = findViewById(R.id.loginuser)
@@ -43,22 +42,31 @@ class MainActivity : AppCompatActivity() {
         botonCrearCuenta = findViewById(R.id.logBotonCrear)
 //        botonSalir = findViewById(R.id.botonSalir)
         textoDebug = findViewById(R.id.textodebug)
+        webViewGif = findViewById(R.id.webViewLogin)
 
 
+        webViewGif.settings.cacheMode = WebSettings.LOAD_NO_CACHE // Deshabilita la caché
+        @SuppressLint("SetJavaScriptEnabled")
+        webViewGif.settings.javaScriptEnabled = true
+        webViewGif.settings.useWideViewPort = true
+        webViewGif.settings.loadWithOverviewMode = true
+        webViewGif.webViewClient = WebViewClient()
+        webViewGif.loadUrl("https://media.tenor.com/3NP3M9aViooAAAAi/duck-waddling.gif")
         //Boton aceptar comprueba el login
         botonAceptar.setOnClickListener{
             //Si el login es correcto se hace un intent de la clase MainMenu y le paso por put extra el nombre de usuario
             // si no lo es muestro una notificación con mensaje de error
             val usuarioCheck = comprobarLogin()
-            if (usuarioCheck.nombre.isNotBlank() and usuarioCheck.password.isNotBlank())
+            if (usuarioCheck.id != 0)
             {
                 val intent = Intent(this,MainMenu::class.java)
-                intent.putExtra("nombreUser",usuarioCheck.nombre)
+                Log.i("APLICACIONTEST:", "onCreate: se manda el usuario ${usuarioCheck.nombre} a la siguiente actividad")
+                intent.putExtra("usuario",usuarioCheck)
                 startActivity(intent)
             }
             else
             {
-                val toast = Toast.makeText(this,R.string.inicio_de_sesion_incorrecto,Toast.LENGTH_SHORT)
+                val toast = Toast.makeText(this, R.string.inicio_de_sesion_incorrecto,Toast.LENGTH_SHORT)
                 toast.show()
             }
         }
@@ -123,10 +131,10 @@ class MainActivity : AppCompatActivity() {
 
             val usuariocheck = Usuario(0,nombreUser,passwordUser)
             val usuarioCheked = conexion!!.checkUsuarioLogin(db,usuariocheck)
-
+            Log.i("APLICACIONTEST:", "onCreate: se comprueba el usuario ${usuarioCheked.nombre} en la base de datos y se compara el nombre con el usuario ${usuariocheck.nombre}")
             if (usuariocheck.nombre == usuarioCheked.nombre)
             {
-                return usuariocheck
+                return usuarioCheked
             }
         }
         return Usuario(0,"","")

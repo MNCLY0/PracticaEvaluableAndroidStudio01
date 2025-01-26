@@ -21,10 +21,5 @@ class InformacionAppActivity : AppCompatActivity() {
             setResult(Activity.RESULT_OK,intent)
             finish()
         }
-
     }
-
-
-
-
 }

@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/view_hobbie"
+        android:layout_width="match_parent"
+        android:layout_height="147dp"
+        android:layout_marginBottom="20dp"
+        android:background="@drawable/hobbie_shape"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.00999999"/>
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/itemHobbieImage"
+        android:layout_width="123dp"
+        android:layout_height="125dp"
+        app:layout_constraintBottom_toBottomOf="@+id/view_hobbie"
+        app:layout_constraintEnd_toEndOf="@+id/view_hobbie"
+        app:layout_constraintHorizontal_bias="0.05"
+        app:layout_constraintStart_toStartOf="@+id/view_hobbie"
+        app:layout_constraintTop_toTopOf="@+id/view_hobbie"
+        app:shapeAppearanceOverlay="@style/ShapeAppearance.Material3.Corner.ExtraLarge"
+        tools:srcCompat="@tools:sample/avatars" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/itemHobbieTitle"
+        style="@style/TextAppearance.Material3.HeadlineLarge"
+        android:layout_width="240dp"
+        android:layout_height="wrap_content"
+        android:text="Titulo"
+        app:layout_constraintBottom_toBottomOf="@+id/view_hobbie"
+        app:layout_constraintEnd_toEndOf="@+id/view_hobbie"
+        app:layout_constraintHorizontal_bias="0.25"
+        app:layout_constraintStart_toEndOf="@+id/itemHobbieImage"
+        app:layout_constraintTop_toTopOf="@+id/view_hobbie"
+        app:layout_constraintVertical_bias="0.120000005" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/itemHobbieDescription"
+        style="@style/TextAppearance.Material3.LabelMedium"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="Descripción"
+        app:layout_constraintBottom_toBottomOf="@+id/view_hobbie"
+        app:layout_constraintEnd_toEndOf="@+id/view_hobbie"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/itemHobbieTitle"
+        app:layout_constraintTop_toBottomOf="@+id/itemHobbieTitle"
+        app:layout_constraintVertical_bias="0.0" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

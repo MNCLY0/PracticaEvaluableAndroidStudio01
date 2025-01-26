@@ -1,106 +1,129 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:gravity="center"
-    android:id="@+id/main">
+    android:gravity="center">
 
-    <LinearLayout
-        android:layout_width="match_parent"
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/materialTextView"
+        style="@style/TextAppearance.Material3.HeadlineLarge"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:paddingLeft="60dp"
-        android:paddingRight="60dp">
+        android:text="Login"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.07999998" />
 
-        <FrameLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="0.40">
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/materialTextView2"
+        style="@style/TextAppearance.Material3.HeadlineMedium"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="¡Bienvenido de nuevo!"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.49"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/materialTextView"
+        app:layout_constraintVertical_bias="0.01999998" />
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="end|center_vertical"
-                android:text="login"
-                android:paddingEnd="10dp"
-                android:textSize="20sp"/>
-        </FrameLayout>
-        <EditText
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/textInputLayout"
+        style="@style/AppTheme.FilledBox.Rounded"
+        android:layout_width="307dp"
+        android:layout_height="61dp"
+        android:padding="10dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/webViewLogin"
+        app:layout_constraintVertical_bias="0.060000002">
+
+        <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/loginuser"
-            android:layout_width="0dp"
+            style="@style/AppTheme.FilledBox.Rounded"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight=".70"
-            android:hint="usuario"
-            />
+            android:hint="Introduce tu usuario"
+            android:padding="0dp" />
+    </com.google.android.material.textfield.TextInputLayout>
 
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/textInputLayout2"
+        style="@style/AppTheme.FilledBox.Rounded"
+        android:layout_width="307dp"
+        android:layout_height="61dp"
+        android:padding="10dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textInputLayout"
+        app:layout_constraintVertical_bias="0.0">
 
-    </LinearLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:paddingLeft="60dp"
-        android:paddingRight="60dp">
-
-        <FrameLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="0.40">
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="end|center_vertical"
-                android:text="password"
-                android:paddingEnd="10dp"
-                android:textSize="20sp"/>
-        </FrameLayout>
-        <EditText
+        <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/loginpassword"
-            android:layout_width="0dp"
+            style="@style/AppTheme.FilledBox.Rounded"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight=".70"
-            android:hint="password"
-            />
+            android:hint="Introduce tu contraseña"
+            android:padding="0dp" />
+    </com.google.android.material.textfield.TextInputLayout>
 
 
-    </LinearLayout>
 
-    <LinearLayout
-        android:layout_width="match_parent"
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/botonAceptar"
+        android:layout_width="284dp"
+        android:layout_height="48dp"
+        android:text="Iniciar sesión"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textInputLayout2"
+        app:layout_constraintVertical_bias="0.18" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/logBotonCrear"
+        android:layout_width="284dp"
+        android:layout_height="48dp"
+        android:text="Crear cuenta"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/botonAceptar"
+        app:layout_constraintVertical_bias="0.110000014" />
+
+    <TextView
+        android:id="@+id/textodebug"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:paddingLeft="60dp"
-        android:paddingRight="60dp"
-        android:paddingTop="10dp"
-        >
+        android:textAlignment="center"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"></TextView>
 
-        <Button
-            android:id="@+id/botonAceptar"
-            android:layout_width="100dp"
-            android:layout_height="wrap_content"
-            android:text="Aceptar"
-            android:layout_margin="10dp"/>
-        <Button
-            android:id="@+id/logBotonCrear"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight=".5"
-            android:text="Crear cuenta"
-            android:layout_margin="10dp"/>
+    <WebView
+        android:id="@+id/webViewLogin"
+        android:layout_width="122dp"
+        android:layout_height="156dp"
+        android:background="#F3F8FA"
+        android:backgroundTint="#F3F8FA"
+        android:fadeScrollbars="false"
+        android:isScrollContainer="false"
+        android:nestedScrollingEnabled="false"
+        android:scrollbarAlwaysDrawHorizontalTrack="false"
+        android:scrollbarAlwaysDrawVerticalTrack="false"
+        android:scrollbarSize="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/materialTextView2"
+        app:layout_constraintVertical_bias="0.060000002" />
 
-    </LinearLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <TextView
-            android:id="@+id/textodebug"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textAlignment="center">
-        </TextView>
-
-    </LinearLayout>
-
-</LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

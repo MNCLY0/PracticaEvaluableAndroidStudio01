@@ -1,31 +1,107 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/linearLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
-    <TextView
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/TextView01"
+    >
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/imgCreateHobbie"
+        android:layout_width="0dp"
+        android:layout_height="212dp"
+        android:background="@android:drawable/ic_menu_upload"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0">
+
+    </com.google.android.material.imageview.ShapeableImageView>
+
+    <Button
+        android:id="@+id/button_cargarImagen"
+        android:layout_width="108dp"
+        android:layout_height="53dp"
+        android:text="Cargar imagen"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.93"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imgCreateHobbie"
+        app:layout_constraintVertical_bias="0.00999999" />
+
+    <Button
+        android:id="@+id/buttonDiscardHobbie"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:padding="16dp"
-        android:text="En esta ventana se añadirán hobbies">
+        android:backgroundTint="@color/md_theme_error"
+        android:text="Descartar hobbie"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.171"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/lbl_editText_descHobbie" />
 
-    </TextView>
-    <LinearLayout
-        android:layout_width="match_parent"
+    <Button
+        android:id="@+id/button_saveHobbie"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:gravity="center">
+        android:text="Guardar hobbie"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.444"
+        app:layout_constraintStart_toEndOf="@+id/buttonDiscardHobbie"
+        app:layout_constraintTop_toTopOf="@+id/buttonDiscardHobbie"
+        app:layout_constraintVertical_bias="0.0" />
 
-        <Button
-            android:id="@+id/btnAceptar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Aceptar" />
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/editText_nombreHobbie"
+        style="@style/AppTheme.FilledBox.Rounded"
+        android:layout_width="307dp"
+        android:layout_height="46dp"
+        android:padding="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/button_cargarImagen"
+        app:layout_constraintVertical_bias="0.0">
 
-    </LinearLayout>
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/textfield_nombreHobbie"
+            style="@style/AppTheme.FilledBox.Rounded"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:hint="Titulo del hobbie"
+            android:padding="0dp" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/lbl_editText_descHobbie"
+        style="@style/AppTheme.FilledBox.Rounded"
+        android:layout_width="365dp"
+        android:layout_height="299dp"
+        android:padding="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editText_nombreHobbie"
+        app:layout_constraintVertical_bias="0.060000002">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/textfield_descHobbie"
+            style="@style/AppTheme.FilledBox.Rounded"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="top|start"
+            android:hint="Descripción del hobbie"
+            android:textAppearance="@style/TextAppearance.Material3.BodyMedium" />/>
+    </com.google.android.material.textfield.TextInputLayout>
 
 
-</LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
