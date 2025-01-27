@@ -127,6 +127,11 @@ public class DBConexion extends SQLiteOpenHelper {
         return hobbies;
     }
 
+    public void borrarHobbie(SQLiteDatabase db, Hobbie hobbie)
+    {
+        db.delete("hobbie","_id = ?",new String[]{String.valueOf(hobbie.getId())});
+    }
+
     public Hobbie crearHobbie(SQLiteDatabase db, Hobbie hobbie)
     {
         ContentValues contentValues = new ContentValues();
@@ -136,6 +141,34 @@ public class DBConexion extends SQLiteOpenHelper {
         contentValues.put("idUsuario",hobbie.getIdUsuario());
         db.insert("hobbie",null,contentValues);
         return hobbie;
+    }
+
+
+    public void editarHobbie(SQLiteDatabase db, Hobbie hobbie)
+    {
+        ContentValues contentValues = new ContentValues();
+        contentValues.put("nombre",hobbie.getNombre());
+        contentValues.put("descripcion",hobbie.getDescripcion());
+        contentValues.put("foto",hobbie.getImagen());
+        contentValues.put("idUsuario",hobbie.getIdUsuario());
+        db.update("hobbie",contentValues,"_id = ?",new String[]{String.valueOf(hobbie.getId())});
+    }
+
+    @SuppressLint("Range")
+    public Hobbie obtenerHobbiePorId(SQLiteDatabase db, int id)
+    {
+        ContentValues contentValues = new ContentValues();
+        String query = "select _id, nombre, descripcion,idUsuario,foto from hobbie where _id = ?";
+        Cursor c = db.rawQuery(query, new String[]{String.valueOf(id)});
+        if (c.moveToFirst()) {
+            int idHobbie = c.getInt(c.getColumnIndex("_id"));
+            int idUsuario = c.getInt(c.getColumnIndex("idUsuario"));
+            String nombre = c.getString(c.getColumnIndex("nombre"));
+            String descripcion = c.getString(c.getColumnIndex("descripcion"));
+            byte[] foto = c.getBlob(c.getColumnIndex("foto"));
+            return new Hobbie(idHobbie,idUsuario,nombre,descripcion,foto);
+        }
+        return new Hobbie(0,0,"","","".getBytes());
     }
 
 

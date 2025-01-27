@@ -7,6 +7,18 @@
     android:layout_height="match_parent"
     >
 
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/lblMensajeAddHobbie"
+        style="@style/TextAppearance.Material3.HeadlineLarge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingBottom="10dp"
+        android:text="Nombre hobbie"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/imgCreateHobbie"
         android:layout_width="0dp"
@@ -15,7 +27,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/lblMensajeAddHobbie"
         app:layout_constraintVertical_bias="0.0">
 
     </com.google.android.material.imageview.ShapeableImageView>
@@ -59,8 +71,8 @@
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/editText_nombreHobbie"
         style="@style/AppTheme.FilledBox.Rounded"
-        android:layout_width="307dp"
-        android:layout_height="46dp"
+        android:layout_width="362dp"
+        android:layout_height="44dp"
         android:padding="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -80,8 +92,8 @@
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/lbl_editText_descHobbie"
         style="@style/AppTheme.FilledBox.Rounded"
-        android:layout_width="365dp"
-        android:layout_height="299dp"
+        android:layout_width="366dp"
+        android:layout_height="268dp"
         android:padding="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

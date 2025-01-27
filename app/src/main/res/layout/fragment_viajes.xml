@@ -5,7 +5,6 @@
     android:id="@+id/frameLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#33000000"
     tools:context=".ViajesFragment">
 
     <ImageView
@@ -14,6 +13,7 @@
         android:layout_height="151dp"
         android:background="#00FFEB3B"
         android:textAlignment="center"
+        android:tint="@color/md_theme_onBackground"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
@@ -27,10 +27,9 @@
         android:id="@+id/textView"
         android:layout_width="354dp"
         android:layout_height="232dp"
-        android:background="#00FF0000"
         android:text="Este area se encuentra actualmente en proceso de desarrollo"
         android:textAlignment="center"
-        android:textColor="#000000"
+        android:textColor="@color/md_theme_onBackground"
         android:textSize="34sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"

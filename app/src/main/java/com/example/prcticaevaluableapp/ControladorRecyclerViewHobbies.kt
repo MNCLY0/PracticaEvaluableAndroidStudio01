@@ -1,7 +1,9 @@
 package com.example.prcticaevaluableapp
 
+import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -25,6 +27,16 @@ class ControladorRecyclerViewHobbies(private val listaHobbies: ArrayList<Hobbie>
     override fun onBindViewHolder(holder: VistaHobbie, position: Int) {
         val hobbie = listaHobbies[position]
         holder.titulo?.text = hobbie.nombre
+
+        holder.itemView.setOnClickListener{
+            // Creamos un Intent para abrir la actividad de detalle del hobbie
+            val intent = Intent(holder.itemView.context, ViewHobbieInfo::class.java)
+            // Pasamos el hobbie a la actividad de detalle
+            intent.putExtra("hobbie", Hobbie(hobbie.id,hobbie.idUsuario, hobbie.nombre, hobbie.descripcion, "".toByteArray()))
+            // Iniciamos la actividad de detalle
+            holder.itemView.context.startActivity(intent)
+            Log.i("APLICACIONTEST:", "onBindViewHolder: Se ha pulsado el hobbie ${hobbie.nombre}")
+        }
 
         // Comprobamos si hay un salto de línea en la descripción
         //Esto lo hacemos para que no se muestre el salto de línea en la descripción y solo se muestre la primerar parte de la descripción

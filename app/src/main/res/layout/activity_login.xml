@@ -33,7 +33,7 @@
         app:layout_constraintVertical_bias="0.01999998" />
 
 
-    <com.google.android.material.textfield.TextInputLayout
+    s<com.google.android.material.textfield.TextInputLayout
         android:id="@+id/textInputLayout"
         style="@style/AppTheme.FilledBox.Rounded"
         android:layout_width="307dp"
@@ -43,7 +43,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/webViewLogin"
-        app:layout_constraintVertical_bias="0.060000002">
+        app:layout_constraintVertical_bias="0.110000014">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/loginuser"
@@ -76,7 +76,6 @@
     </com.google.android.material.textfield.TextInputLayout>
 
 
-
     <com.google.android.material.button.MaterialButton
         android:id="@+id/botonAceptar"
         android:layout_width="284dp"
@@ -97,8 +96,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/botonAceptar"
-        app:layout_constraintVertical_bias="0.110000014" />
-
+        app:layout_constraintVertical_bias="0.07999998" />
     <TextView
         android:id="@+id/textodebug"
         android:layout_width="0dp"
@@ -124,6 +122,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/materialTextView2"
-        app:layout_constraintVertical_bias="0.060000002" />
+        app:layout_constraintVertical_bias="0.110000014" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
-<!--    Modifico un poco el tema predeterminado para que herede de Material3.DynamicColors.Dark y cambio el color de algunas cosas-->
+    <!--    Modifico un poco el tema predeterminado para que herede de Material3.DynamicColors.Dark y cambio el color de algunas cosas-->
     <style name="AppTheme_night" parent="Theme.Material3.Dark.NoActionBar">
         <item name="colorPrimary">@color/md_theme_primary</item>
         <item name="colorOnPrimary">@color/md_theme_onPrimary</item>

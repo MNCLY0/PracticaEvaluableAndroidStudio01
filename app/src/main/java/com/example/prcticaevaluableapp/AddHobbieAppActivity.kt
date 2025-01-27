@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Intent
 import android.database.sqlite.SQLiteDatabase
 import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.graphics.drawable.BitmapDrawable
 import android.net.Uri
 import android.os.Bundle
@@ -16,7 +17,9 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import com.example.prcticaevaluableapp.DB.DBConexion
 import com.google.android.material.textfield.TextInputEditText
+import com.google.android.material.textview.MaterialTextView
 import java.io.ByteArrayOutputStream
+import kotlin.properties.Delegates
 
 class AddHobbieAppActivity : AppCompatActivity() {
 
@@ -24,9 +27,12 @@ class AddHobbieAppActivity : AppCompatActivity() {
     private lateinit var botonSalirYGuardar: Button
     private lateinit var botonCargarFoto: Button
     private lateinit var imageView: ImageView
+    private lateinit var lblMensajeAddHobbie: MaterialTextView
     private lateinit var editText_nombreHobbie: TextInputEditText
     private lateinit var editText_descHobbie: TextInputEditText
     private lateinit var galleryLauncher: ActivityResultLauncher<Intent>
+
+    private var idUsuario by Delegates.notNull<Int>()
 
     private lateinit var usuarioLogged : Usuario
 
@@ -36,14 +42,34 @@ class AddHobbieAppActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_hobbie)
-
+        lblMensajeAddHobbie = findViewById(R.id.lblMensajeAddHobbie)
         editText_nombreHobbie = findViewById(R.id.textfield_nombreHobbie)
         editText_descHobbie = findViewById(R.id.textfield_descHobbie)
-
-        usuarioLogged = intent.getSerializableExtra("usuario") as Usuario
         botonCargarFoto = findViewById(R.id.button_cargarImagen)
         imageView = findViewById(R.id.imgCreateHobbie)
         botonSalirYGuardar = findViewById(R.id.button_saveHobbie)
+        botonSalirSinGuardar = findViewById(R.id.buttonDiscardHobbie)
+
+
+        if (intent.hasExtra("usuario"))
+        {
+            usuarioLogged = intent.getSerializableExtra("usuario") as Usuario
+            idUsuario = usuarioLogged.id
+            lblMensajeAddHobbie.text = "Añadir un nuevo hobbie"
+        }
+        else idUsuario = 0
+
+        if (intent.getBooleanExtra("isEdit", false)) {
+            val hobbie = intent.getSerializableExtra("hobbie") as Hobbie
+            editText_nombreHobbie.setText(hobbie.nombre)
+            editText_descHobbie.setText(hobbie.descripcion)
+            imageView.setImageBitmap(byteArrayToBitmap(obtenerImagenHobbie(hobbie)))
+            idUsuario = hobbie.idUsuario
+            lblMensajeAddHobbie.text = "Editar hobbie ${hobbie.nombre}"
+            botonSalirSinGuardar.text = "Descartar cambios"
+
+        }
+
 
         // Registro del ActivityResultLauncher para la galería de imágenes
         galleryLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
@@ -59,13 +85,19 @@ class AddHobbieAppActivity : AppCompatActivity() {
 
             conexion = DBConexion(this);
             db = conexion!!.writableDatabase
+            if (intent.getBooleanExtra("isEdit", false)) {
+                val hobbie = intent.getSerializableExtra("hobbie") as Hobbie
+                Log.i("DB", "Se procede a editar el hobbie: ${hobbie.id}, del usuario : ${hobbie.idUsuario}: ${hobbie.nombre} , ${hobbie.descripcion} , ${hobbie.imagen} ")
+                conexion!!.editarHobbie(db, Hobbie(hobbie.id, hobbie.idUsuario, editText_nombreHobbie.text.toString(), editText_descHobbie.text.toString(), imagenAByteArray(imageView)))
+            } else {
+                val hobbie = Hobbie(0, idUsuario, editText_nombreHobbie.text.toString(), editText_descHobbie.text.toString(), ByteArray(0))
+                Log.i("DB", "Se procede a crear el hobbie: ${hobbie.id}, del usuario : ${hobbie.idUsuario}: ${hobbie.nombre} , ${hobbie.descripcion} , ${hobbie.imagen} ")
+                conexion!!.crearHobbie(db, Hobbie(0, idUsuario, editText_nombreHobbie.text.toString(), editText_descHobbie.text.toString(), imagenAByteArray(imageView)))
 
-            val hobbie = Hobbie(0, usuarioLogged.id, editText_nombreHobbie.text.toString(), editText_descHobbie.text.toString(), ByteArray(0))
-            Log.i("DB", "Se procede a crear el hobbie: ${hobbie.id}, del usuario : ${hobbie.idUsuario}: ${hobbie.nombre} , ${hobbie.descripcion} , ${hobbie.imagen} ")
-            conexion!!.crearHobbie(db, Hobbie(0, usuarioLogged.id, editText_nombreHobbie.text.toString(), editText_descHobbie.text.toString(), imagenAByteArray(imageView)))
+                val intent = Intent()
+                setResult(Activity.RESULT_OK, intent)
+            }
 
-            val intent = Intent()
-            setResult(Activity.RESULT_OK, intent)
             finish()
         }
 
@@ -77,23 +109,35 @@ class AddHobbieAppActivity : AppCompatActivity() {
             galleryLauncher.launch(intent)
         }
 
-        botonSalirSinGuardar = findViewById(R.id.buttonDiscardHobbie)
         botonSalirSinGuardar.setOnClickListener {
             val intent = Intent()
             setResult(Activity.RESULT_CANCELED, intent)
             finish()
         }
+
+    }
+
+    private fun byteArrayToBitmap(byteArray: ByteArray): Bitmap {
+        return BitmapFactory.decodeByteArray(byteArray, 0, byteArray.size)
     }
 
     private fun imagenAByteArray(imageView: ImageView): ByteArray {
-        Log.d("imagenAByteArray", "Convirtiendo imagen a byte array")
-        val bitmap = (imageView.drawable as BitmapDrawable).bitmap
-        Log.d("imagenAByteArray", "Bitmap obtenido: $bitmap")
-        val stream = ByteArrayOutputStream()
-        bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream)
-        Log.d("imagenAByteArray", "Imagen comprimida")
-        val byteArray = stream.toByteArray()
-        Log.d("imagenAByteArray", "Byte array generado: ${byteArray.size} bytes")
-        return byteArray
+        val drawable = imageView.drawable
+        if (drawable != null && drawable is BitmapDrawable) {
+            val bitmap = drawable.bitmap
+            val stream = ByteArrayOutputStream()
+            bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream)
+            return stream.toByteArray()
+        } else {
+            Log.e("imagenAByteArray", "Drawable is null or not a BitmapDrawable")
+            return ByteArray(0) // Return an empty byte array or handle the error as needed
+        }
+    }
+
+    private fun obtenerImagenHobbie(hobbie: Hobbie) : ByteArray {
+        conexion = DBConexion(this);
+        db = conexion!!.writableDatabase
+        val geHobbie = conexion!!.obtenerHobbiePorId(db, hobbie.id)
+        return geHobbie.imagen
     }
 }

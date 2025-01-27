@@ -3,4 +3,5 @@
     <string name="usuario">Cliente</string>
     <string name="password">123456</string>
     <string name="inicio_de_sesion_incorrecto">Inicio de sesion incorrecto</string>
+    <string name="title_activity_view_hobbie_info">ViewHobbieInfo</string>
 </resources>
