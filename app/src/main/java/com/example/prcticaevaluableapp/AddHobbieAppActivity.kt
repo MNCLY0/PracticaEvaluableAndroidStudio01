@@ -11,6 +11,7 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.Button
 import android.widget.ImageView
+import android.widget.Toast
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
@@ -82,17 +83,26 @@ class AddHobbieAppActivity : AppCompatActivity() {
         }
 
         botonSalirYGuardar.setOnClickListener {
+            val nombreHobbie = editText_nombreHobbie.text.toString()
+            val descHobbie = editText_descHobbie.text.toString()
+            val drawable = imageView.drawable
 
-            conexion = DBConexion(this);
+
+            if (drawable == null || nombreHobbie.isEmpty() || descHobbie.isEmpty()) {
+                Toast.makeText(this, "Por favor, rellena todos los campos", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+
+            conexion = DBConexion(this)
             db = conexion!!.writableDatabase
             if (intent.getBooleanExtra("isEdit", false)) {
                 val hobbie = intent.getSerializableExtra("hobbie") as Hobbie
                 Log.i("DB", "Se procede a editar el hobbie: ${hobbie.id}, del usuario : ${hobbie.idUsuario}: ${hobbie.nombre} , ${hobbie.descripcion} , ${hobbie.imagen} ")
-                conexion!!.editarHobbie(db, Hobbie(hobbie.id, hobbie.idUsuario, editText_nombreHobbie.text.toString(), editText_descHobbie.text.toString(), imagenAByteArray(imageView)))
+                conexion!!.editarHobbie(db, Hobbie(hobbie.id, hobbie.idUsuario, nombreHobbie, descHobbie, imagenAByteArray(imageView)))
             } else {
-                val hobbie = Hobbie(0, idUsuario, editText_nombreHobbie.text.toString(), editText_descHobbie.text.toString(), ByteArray(0))
+                val hobbie = Hobbie(0, idUsuario, nombreHobbie, descHobbie, imagenAByteArray(imageView))
                 Log.i("DB", "Se procede a crear el hobbie: ${hobbie.id}, del usuario : ${hobbie.idUsuario}: ${hobbie.nombre} , ${hobbie.descripcion} , ${hobbie.imagen} ")
-                conexion!!.crearHobbie(db, Hobbie(0, idUsuario, editText_nombreHobbie.text.toString(), editText_descHobbie.text.toString(), imagenAByteArray(imageView)))
+                conexion!!.crearHobbie(db, hobbie)
 
                 val intent = Intent()
                 setResult(Activity.RESULT_OK, intent)

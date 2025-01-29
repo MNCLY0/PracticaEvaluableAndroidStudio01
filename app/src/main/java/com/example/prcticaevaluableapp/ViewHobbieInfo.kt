@@ -5,12 +5,15 @@ import android.database.sqlite.SQLiteDatabase
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.os.Bundle
+import android.view.Menu
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toolbar
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
@@ -24,7 +27,7 @@ import com.example.prcticaevaluableapp.ui.theme.PrácticaEvaluableAppTheme
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.textview.MaterialTextView
 
-class ViewHobbieInfo : ComponentActivity() {
+class ViewHobbieInfo : AppCompatActivity() {
 
     lateinit var textViewNombreHobbie : MaterialTextView
     lateinit var textViewDescHobbie : MaterialTextView
@@ -43,6 +46,8 @@ class ViewHobbieInfo : ComponentActivity() {
         textViewDescHobbie = findViewById(R.id.textViewDescripcion)
         botonEditar = findViewById(R.id.floatingButtonEditHobbie)
         botonBorrar = findViewById(R.id.floatingButtonDeleteHobbie)
+
+
 
         hobbie = intent.getSerializableExtra("hobbie") as Hobbie
 
@@ -111,6 +116,7 @@ class ViewHobbieInfo : ComponentActivity() {
     private fun imagenBitmap(imagen: ByteArray): Bitmap {
         return BitmapFactory.decodeByteArray(imagen, 0, imagen.size)
     }
+
 
 
 }

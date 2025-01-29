@@ -11,6 +11,7 @@ import android.util.Log;
 import androidx.annotation.Nullable;
 
 import com.example.prcticaevaluableapp.Hobbie;
+import com.example.prcticaevaluableapp.PasswordHasher;
 import com.example.prcticaevaluableapp.Usuario;
 
 import java.util.ArrayList;
@@ -64,21 +65,6 @@ public class DBConexion extends SQLiteOpenHelper {
     }
 
 
-    public Usuario checkUsuarioLogin(SQLiteDatabase db, Usuario usuario) {
-        String query = "select _id, nombre, password from usuario where nombre = ?";
-        Cursor c = db.rawQuery(query, new String[]{usuario.getNombre()});
-        if (c.moveToFirst()) {
-            @SuppressLint("Range") String realPassword = c.getString(c.getColumnIndex("password"));
-            if (usuario.getPassword().equals(realPassword))
-            {
-                @SuppressLint("Range") String nombre = c.getString(c.getColumnIndex("nombre"));
-                @SuppressLint("Range") int id = c.getInt(c.getColumnIndex("_id"));
-                return new Usuario(id,nombre,"");
-            }
-        }
-        c.close();
-        return new Usuario(0,"","");
-    }
 
     //Comprobamos la existencia del usuario
     public boolean checkUsuarioExists(SQLiteDatabase db, Usuario usuario)
@@ -88,17 +74,31 @@ public class DBConexion extends SQLiteOpenHelper {
         return c.moveToFirst();
     }
 
-    public Usuario crearUsuario(SQLiteDatabase db, Usuario usuario)
-    {
-        if (!checkUsuarioExists(db,usuario))
-        {
+
+    public Usuario crearUsuario(SQLiteDatabase db, Usuario usuario) {
+        if (!checkUsuarioExists(db, usuario)) {
             ContentValues contentValues = new ContentValues();
-            contentValues.put("nombre",usuario.getNombre());
-            contentValues.put("password",usuario.getPassword());
-            db.insert("usuario",null,contentValues);
+            contentValues.put("nombre", usuario.getNombre());
+            contentValues.put("password", PasswordHasher.hashPassword(usuario.getPassword()));
+            db.insert("usuario", null, contentValues);
             return usuario;
         }
-        return new Usuario(0,"","");
+        return new Usuario(0, "", "");
+    }
+
+    public Usuario checkUsuarioLogin(SQLiteDatabase db, Usuario usuario) {
+        String query = "select _id, nombre, password from usuario where nombre = ?";
+        Cursor c = db.rawQuery(query, new String[]{usuario.getNombre()});
+        if (c.moveToFirst()) {
+            @SuppressLint("Range") String realPassword = c.getString(c.getColumnIndex("password"));
+            if (PasswordHasher.hashPassword(usuario.getPassword()).equals(realPassword)) {
+                @SuppressLint("Range") String nombre = c.getString(c.getColumnIndex("nombre"));
+                @SuppressLint("Range") int id = c.getInt(c.getColumnIndex("_id"));
+                return new Usuario(id, nombre, "");
+            }
+        }
+        c.close();
+        return new Usuario(0, "", "");
     }
         
     @SuppressLint("Range")
