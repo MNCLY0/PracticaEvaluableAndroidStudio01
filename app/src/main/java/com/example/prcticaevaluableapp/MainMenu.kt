@@ -62,23 +62,23 @@ class MainMenu : AppCompatActivity() {
 
     }
 
-    //Ponemos el menu
+//    Ponemos el menu
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.menu_main, menu)
         menu?.findItem(R.id.nombreUser)?.setTitle(usuarioLogged.nombre)
         return true
     }
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return when (item.itemId) {
-            //El boton de mostrar informacion, lanza el intent InformacionAppActivity
-            R.id.btnInformacionApp -> {
-                lanzarInformacionDe()
-                true
-            }
-            else -> super.onOptionsItemSelected(item)
-        }
-    }
+//    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+////        return when (item.itemId) {
+////            //El boton de mostrar informacion, lanza el intent InformacionAppActivity
+////            R.id.btnInformacionApp -> {
+////                lanzarInformacionDe()
+////                true
+////            }
+////            else -> super.onOptionsItemSelected(item)
+////        }
+//    }
 
     private fun lanzarInformacionDe(view: View? = null) {
         val i = Intent(this, InformacionAppActivity::class.java)

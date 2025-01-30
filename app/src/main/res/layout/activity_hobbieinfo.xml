@@ -10,14 +10,12 @@
         android:id="@+id/toolbarHobbieInfo"
         android:layout_width="409dp"
         android:layout_height="wrap_content"
-        android:background="?attr/colorPrimary"
         android:minHeight="?attr/actionBarSize"
         android:theme="?attr/actionBarTheme"
         app:layout_constraintBottom_toBottomOf="@+id/linearLayoutButtons"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0"
-        tools:layout_editor_absoluteX="0dp"
-        />
+        tools:layout_editor_absoluteX="0dp" />
 
     <ImageView
         android:id="@+id/imageViewHobbie"
@@ -34,8 +32,8 @@
 
     <ScrollView
         android:id="@+id/scrollViewHobbie"
-        android:layout_width="401dp"
-        android:layout_height="236dp"
+        android:layout_width="0dp"
+        android:layout_height="329dp"
         app:layout_constraintBottom_toBottomOf="@+id/linearLayoutButtons"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHeight_percent="0.5"
@@ -44,6 +42,8 @@
         app:layout_constraintVertical_bias="0.17000002">
 
         <com.google.android.material.textview.MaterialTextView
+            android:paddingEnd="30dp"
+            android:paddingStart="30dp"
             android:id="@+id/textViewDescripcion"
             style="@style/TextAppearance.Material3.BodyMedium"
             android:layout_width="match_parent"

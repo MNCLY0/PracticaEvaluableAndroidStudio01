@@ -103,8 +103,8 @@ class MainActivity : AppCompatActivity() {
         conexion = DBConexion(this);
         db = conexion!!.writableDatabase
 
-        val nombreUser = inputUser.getText().toString()
-        val passwordUser = inputPassword.getText().toString()
+        val nombreUser = inputUser.getText().toString().trim()
+        val passwordUser = inputPassword.getText().toString().trim()
         val usuario = Usuario(0,nombreUser,passwordUser)
 
         return conexion!!.crearUsuario(db,usuario)

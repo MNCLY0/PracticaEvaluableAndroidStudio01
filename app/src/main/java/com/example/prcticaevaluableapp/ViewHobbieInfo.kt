@@ -5,35 +5,24 @@ import android.database.sqlite.SQLiteDatabase
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.os.Bundle
-import android.view.Menu
+import android.view.MenuItem
 import android.widget.ImageView
-import android.widget.TextView
-import android.widget.Toolbar
-import androidx.activity.ComponentActivity
-import androidx.activity.compose.setContent
-import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.widget.Toolbar
 import androidx.appcompat.app.AppCompatActivity
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.palette.graphics.Palette
 import com.example.prcticaevaluableapp.DB.DBConexion
-import com.example.prcticaevaluableapp.ui.theme.PrácticaEvaluableAppTheme
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.textview.MaterialTextView
 
 class ViewHobbieInfo : AppCompatActivity() {
 
-    lateinit var textViewNombreHobbie : MaterialTextView
+//    lateinit var textViewNombreHobbie : MaterialTextView
     lateinit var textViewDescHobbie : MaterialTextView
     lateinit var imageviewHobbie : ImageView
     lateinit var botonEditar : FloatingActionButton
     lateinit var botonBorrar : FloatingActionButton
+    lateinit var toolbar: Toolbar
     lateinit var hobbie : Hobbie
     private var conexion: DBConexion? = null
     private var db: SQLiteDatabase? = null
@@ -41,7 +30,8 @@ class ViewHobbieInfo : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_hobbieinfo)
-        textViewNombreHobbie = findViewById(R.id.textViewNombreHobbie)
+        toolbar = findViewById(R.id.toolbarHobbieInfo)
+//        textViewNombreHobbie = findViewById(R.id.textViewNombreHobbie)
         imageviewHobbie = findViewById(R.id.imageViewHobbie)
         textViewDescHobbie = findViewById(R.id.textViewDescripcion)
         botonEditar = findViewById(R.id.floatingButtonEditHobbie)
@@ -49,12 +39,22 @@ class ViewHobbieInfo : AppCompatActivity() {
 
 
 
+
+
         hobbie = intent.getSerializableExtra("hobbie") as Hobbie
 
-        textViewNombreHobbie.text = hobbie.nombre
+//        textViewNombreHobbie.text = hobbie.nombre
         textViewDescHobbie.text = hobbie.descripcion
         val imagenBitmap = imagenBitmap(obtenerImagenHobbie(hobbie))
         imageviewHobbie.setImageBitmap(imagenBitmap)
+        toolbar.setTitle("Hobbie: ${hobbie.nombre}")
+
+        setSupportActionBar(toolbar)
+        supportActionBar?.apply {
+            setDisplayHomeAsUpEnabled(true)
+            setDisplayShowHomeEnabled(true)
+        }
+
 
 
         // Comprobamos si la imagen está vacía
@@ -101,7 +101,7 @@ class ViewHobbieInfo : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
         actualizarInfoHobbie()
-        textViewNombreHobbie.text = hobbie.nombre
+//        textViewNombreHobbie.text = hobbie.nombre
         textViewDescHobbie.text = hobbie.descripcion
         val imagenBitmap = imagenBitmap(hobbie.imagen)
         imageviewHobbie.setImageBitmap(imagenBitmap)
@@ -115,6 +115,15 @@ class ViewHobbieInfo : AppCompatActivity() {
 
     private fun imagenBitmap(imagen: ByteArray): Bitmap {
         return BitmapFactory.decodeByteArray(imagen, 0, imagen.size)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        // Si se pulsa el botón de retroceso, cerramos la actividad
+        if (item.itemId == android.R.id.home) {
+            finish()
+            return true
+        }
+        return super.onOptionsItemSelected(item)
     }
 
 
