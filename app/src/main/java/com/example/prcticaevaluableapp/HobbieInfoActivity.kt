@@ -15,7 +15,7 @@ import com.example.prcticaevaluableapp.DB.DBConexion
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.textview.MaterialTextView
 
-class ViewHobbieInfo : AppCompatActivity() {
+class HobbieInfoActivity : AppCompatActivity() {
 
 //    lateinit var textViewNombreHobbie : MaterialTextView
     lateinit var textViewDescHobbie : MaterialTextView
@@ -80,7 +80,7 @@ class ViewHobbieInfo : AppCompatActivity() {
                 setTitle("Confirmar borrado")
                 setMessage("¿Estás seguro de que deseas borrar el hobbie ${hobbie.nombre}?")
                 setPositiveButton("Sí") { _, _ ->
-                    conexion = DBConexion(this@ViewHobbieInfo)
+                    conexion = DBConexion(this@HobbieInfoActivity)
                     db = conexion!!.writableDatabase
                     conexion!!.borrarHobbie(db, hobbie)
                     finish()

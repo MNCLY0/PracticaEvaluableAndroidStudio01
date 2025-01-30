@@ -66,6 +66,7 @@ class MainMenu : AppCompatActivity() {
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.menu_main, menu)
         menu?.findItem(R.id.nombreUser)?.setTitle(usuarioLogged.nombre)
+
         return true
     }
 

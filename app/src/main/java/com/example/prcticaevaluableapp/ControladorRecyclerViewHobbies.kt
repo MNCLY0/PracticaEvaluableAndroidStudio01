@@ -30,7 +30,7 @@ class ControladorRecyclerViewHobbies(private val listaHobbies: ArrayList<Hobbie>
 
         holder.itemView.setOnClickListener{
             // Creamos un Intent para abrir la actividad de detalle del hobbie
-            val intent = Intent(holder.itemView.context, ViewHobbieInfo::class.java)
+            val intent = Intent(holder.itemView.context, HobbieInfoActivity::class.java)
             // Pasamos el hobbie a la actividad de detalle
             intent.putExtra("hobbie", Hobbie(hobbie.id,hobbie.idUsuario, hobbie.nombre, hobbie.descripcion, "".toByteArray()))
             // Iniciamos la actividad de detalle
