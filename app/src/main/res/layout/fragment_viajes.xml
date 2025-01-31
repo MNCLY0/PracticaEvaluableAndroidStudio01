@@ -13,7 +13,6 @@
         android:layout_height="151dp"
         android:background="#00FFEB3B"
         android:textAlignment="center"
-        android:tint="@color/md_theme_onBackground"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
@@ -21,6 +20,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.154"
         app:srcCompat="@drawable/baseline_info_outline_24"
+        app:tint="@color/md_theme_onBackground"
         tools:src="@tools:sample/avatars" />
 
     <TextView

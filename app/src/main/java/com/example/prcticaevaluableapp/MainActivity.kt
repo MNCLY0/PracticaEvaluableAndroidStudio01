@@ -2,6 +2,7 @@ package com.example.prcticaevaluableapp
 
 import android.annotation.SuppressLint
 import android.content.Intent
+import android.database.CursorWindow
 import android.database.sqlite.SQLiteDatabase
 import android.os.Bundle
 import android.util.Log
@@ -14,6 +15,9 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.prcticaevaluableapp.DB.DBConexion
+import com.google.android.material.textview.MaterialTextView
+import java.lang.reflect.Field
+
 
 class MainActivity : AppCompatActivity() {
 
@@ -22,7 +26,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var inputPassword: EditText
 
     private lateinit var botonAceptar: Button
-    private lateinit var botonCrearCuenta: Button
+    private lateinit var botonCrearCuenta: MaterialTextView
     private lateinit var webViewGif: WebView
 //    private lateinit var botonSalir: Button
 
@@ -39,9 +43,8 @@ class MainActivity : AppCompatActivity() {
         inputUser = findViewById(R.id.loginuser)
         inputPassword = findViewById(R.id.loginpassword)
         botonAceptar = findViewById(R.id.botonAceptar)
-        botonCrearCuenta = findViewById(R.id.logBotonCrear)
+        botonCrearCuenta = findViewById(R.id.loginPulsaParaCrear)
 //        botonSalir = findViewById(R.id.botonSalir)
-        textoDebug = findViewById(R.id.textodebug)
         webViewGif = findViewById(R.id.webViewLogin)
 
 
@@ -69,22 +72,25 @@ class MainActivity : AppCompatActivity() {
                 val toast = Toast.makeText(this, R.string.inicio_de_sesion_incorrecto,Toast.LENGTH_SHORT)
                 toast.show()
             }
+
         }
 
         //Boton crear cuenta crea un usuario en la base de datos y muestra un mensaje de bienvenida
         botonCrearCuenta.setOnClickListener{
-            val intento = tryCrearCuenta()
-
-            if (intento.nombre.isNotBlank() and intento.nombre.isNotBlank())
-            {
-                val toast = Toast.makeText(this,"¡Cuenta creada con exito, bienvenido ${intento.nombre}!", Toast.LENGTH_SHORT)
-                toast.show()
-            }
-            else
-            {
-                val toast = Toast.makeText(this,"Error al crear cuenta, el usuario ${intento.nombre} ya existe en la base de datos.", Toast.LENGTH_SHORT)
-                toast.show()
-            }
+            val intent = Intent(this,CrearCuentaActivity::class.java)
+            startActivity(intent)
+//            val intento = tryCrearCuenta()
+//
+//            if (intento.nombre.isNotBlank() and intento.nombre.isNotBlank())
+//            {
+//                val toast = Toast.makeText(this,"¡Cuenta creada con exito, bienvenido ${intento.nombre}!", Toast.LENGTH_SHORT)
+//                toast.show()
+//            }
+//            else
+//            {
+//                val toast = Toast.makeText(this,"Error al crear cuenta, el usuario ${intento.nombre} ya existe en la base de datos.", Toast.LENGTH_SHORT)
+//                toast.show()
+//            }
         }
 
 //        //Boton salir cierra la app
@@ -94,27 +100,6 @@ class MainActivity : AppCompatActivity() {
     }
 
 
-    /**
-     * Función que intenta crear una cuenta en la base de datos
-     * @return Usuario
-     */
-    private fun tryCrearCuenta() : Usuario
-    {
-        conexion = DBConexion(this);
-        db = conexion!!.writableDatabase
-
-        val nombreUser = inputUser.getText().toString().trim()
-        val passwordUser = inputPassword.getText().toString().trim()
-        val usuario = Usuario(0,nombreUser,passwordUser)
-
-        return conexion!!.crearUsuario(db,usuario)
-
-    }
-
-    /**
-     * Función que comprueba el login de un usuario
-     * @return Usuario
-     */
 
     private fun comprobarLogin(): Usuario {
 
@@ -129,7 +114,7 @@ class MainActivity : AppCompatActivity() {
             conexion = DBConexion(this);
             db = conexion!!.writableDatabase
 
-            val usuariocheck = Usuario(0,nombreUser,passwordUser)
+            val usuariocheck = Usuario(0,nombreUser,passwordUser,"".toByteArray())
             val usuarioCheked = conexion!!.checkUsuarioLogin(db,usuariocheck)
             Log.i("APLICACIONTEST:", "onCreate: se comprueba el usuario ${usuarioCheked.nombre} en la base de datos y se compara el nombre con el usuario ${usuariocheck.nombre}")
             if (usuariocheck.nombre == usuarioCheked.nombre)
@@ -137,7 +122,7 @@ class MainActivity : AppCompatActivity() {
                 return usuarioCheked
             }
         }
-        return Usuario(0,"","")
+        return Usuario(0,"","", "".toByteArray())
     }
 
 

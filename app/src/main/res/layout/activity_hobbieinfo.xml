@@ -13,53 +13,65 @@
         android:minHeight="?attr/actionBarSize"
         android:theme="?attr/actionBarTheme"
         app:layout_constraintBottom_toBottomOf="@+id/linearLayoutButtons"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0"
-        tools:layout_editor_absoluteX="0dp" />
+        app:layout_constraintVertical_bias="0.0" />
 
-    <ImageView
+    <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/imageViewHobbie"
-        android:layout_width="415dp"
-        android:layout_height="214dp"
-        android:background="@color/gray"
-        android:src="@drawable/baseline_person_24"
+        android:layout_width="339dp"
+        android:layout_height="211dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/toolbarHobbieInfo"
         app:layout_constraintVertical_bias="0.04000002"
-        app:layout_constraintWidth_percent="1.0" />
+        app:layout_constraintWidth_percent="1.0"
+        app:shapeAppearance="@style/ShapeAppearance.Material3.Corner.Medium"
+        app:strokeColor="@color/md_theme_onBackground"
+        app:strokeWidth="1dp" />
 
-    <ScrollView
-        android:id="@+id/scrollViewHobbie"
-        android:layout_width="0dp"
-        android:layout_height="329dp"
-        app:layout_constraintBottom_toBottomOf="@+id/linearLayoutButtons"
+    <com.google.android.material.textview.MaterialTextView
+        style="@style/TextAppearance.Material3.HeadlineMedium"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Descripción"
+        app:layout_constraintBottom_toTopOf="@+id/textViewDescripcion"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHeight_percent="0.5"
+        app:layout_constraintHorizontal_bias="0.14"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageViewHobbie" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/textViewDescripcion"
+        style="@style/TextAppearance.Material3.BodyMedium"
+        android:layout_width="342dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="60dp"
+        android:background="@drawable/texto_rounded"
+        android:padding="10dp"
+        android:paddingStart="30dp"
+        android:paddingEnd="30dp"
+        android:text="Descripcion"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayoutButtons"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageViewHobbie"
-        app:layout_constraintVertical_bias="0.17000002">
+        app:layout_constraintVertical_bias="0.0" />
 
-        <com.google.android.material.textview.MaterialTextView
-            android:paddingEnd="30dp"
-            android:paddingStart="30dp"
-            android:id="@+id/textViewDescripcion"
-            style="@style/TextAppearance.Material3.BodyMedium"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Descripcion" />
-    </ScrollView>
-    
     <LinearLayout
         android:id="@+id/linearLayoutButtons"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
         android:gravity="center_vertical|end"
+        android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0">
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/floatingButtonEditHobbie"
@@ -68,7 +80,7 @@
             android:layout_margin="16dp"
             android:src="@drawable/baseline_edit_24"
             app:backgroundTint="?attr/colorPrimary"
-            app:tint="@android:color/black"/>
+            app:tint="@android:color/black" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/floatingButtonDeleteHobbie"
@@ -77,7 +89,7 @@
             android:layout_margin="16dp"
             android:src="@drawable/baseline_delete_24"
             app:backgroundTint="?attr/colorPrimary"
-            app:tint="@android:color/black"/>
+            app:tint="@android:color/black" />
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

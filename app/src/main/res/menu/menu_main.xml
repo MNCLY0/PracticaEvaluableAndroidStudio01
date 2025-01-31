@@ -2,10 +2,4 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.example.ud04_tablayout.MainActivity">
-
-    <item android:id="@+id/nombreUser"
-        android:icon="@drawable/user_icon"
-        android:orderInCategory="4"
-        android:title="TODO"
-        app:showAsAction="always"/>
 </menu>

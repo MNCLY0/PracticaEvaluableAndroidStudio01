@@ -31,7 +31,10 @@ class AddHobbieAppActivity : AppCompatActivity() {
     private lateinit var lblMensajeAddHobbie: MaterialTextView
     private lateinit var editText_nombreHobbie: TextInputEditText
     private lateinit var editText_descHobbie: TextInputEditText
+
     private lateinit var galleryLauncher: ActivityResultLauncher<Intent>
+
+    private val manejadorImagenes: ManejadorImagenes = ManejadorImagenes()
 
     private var idUsuario by Delegates.notNull<Int>()
 
@@ -64,22 +67,11 @@ class AddHobbieAppActivity : AppCompatActivity() {
             val hobbie = intent.getSerializableExtra("hobbie") as Hobbie
             editText_nombreHobbie.setText(hobbie.nombre)
             editText_descHobbie.setText(hobbie.descripcion)
-            imageView.setImageBitmap(byteArrayToBitmap(obtenerImagenHobbie(hobbie)))
+            imageView.setImageBitmap(manejadorImagenes.byteArrayToBitmap(obtenerImagenHobbie(hobbie)))
             idUsuario = hobbie.idUsuario
             lblMensajeAddHobbie.text = "Editar hobbie ${hobbie.nombre}"
             botonSalirSinGuardar.text = "Descartar cambios"
 
-        }
-
-
-        // Registro del ActivityResultLauncher para la galería de imágenes
-        galleryLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
-            // Procesar el resultado de la selección de la imagen de la galería
-            if (result.resultCode == Activity.RESULT_OK) {
-                val data: Intent? = result.data
-                val selectedImageUri: Uri? = data?.data
-                imageView.setImageURI(selectedImageUri)
-            }
         }
 
         botonSalirYGuardar.setOnClickListener {
@@ -98,9 +90,9 @@ class AddHobbieAppActivity : AppCompatActivity() {
             if (intent.getBooleanExtra("isEdit", false)) {
                 val hobbie = intent.getSerializableExtra("hobbie") as Hobbie
                 Log.i("DB", "Se procede a editar el hobbie: ${hobbie.id}, del usuario : ${hobbie.idUsuario}: ${hobbie.nombre} , ${hobbie.descripcion} , ${hobbie.imagen} ")
-                conexion!!.editarHobbie(db, Hobbie(hobbie.id, hobbie.idUsuario, nombreHobbie, descHobbie, imagenAByteArray(imageView)))
+                conexion!!.editarHobbie(db, Hobbie(hobbie.id, hobbie.idUsuario, nombreHobbie, descHobbie, manejadorImagenes.imagenToByteArray(imageView)))
             } else {
-                val hobbie = Hobbie(0, idUsuario, nombreHobbie, descHobbie, imagenAByteArray(imageView))
+                val hobbie = Hobbie(0, idUsuario, nombreHobbie, descHobbie, manejadorImagenes.imagenToByteArray(imageView))
                 Log.i("DB", "Se procede a crear el hobbie: ${hobbie.id}, del usuario : ${hobbie.idUsuario}: ${hobbie.nombre} , ${hobbie.descripcion} , ${hobbie.imagen} ")
                 conexion!!.crearHobbie(db, hobbie)
 
@@ -109,6 +101,17 @@ class AddHobbieAppActivity : AppCompatActivity() {
             }
 
             finish()
+        }
+
+        // Registro del ActivityResultLauncher para la galería de imágenes
+        galleryLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
+            // Procesar el resultado de la selección de la imagen de la galería
+            if (result.resultCode == Activity.RESULT_OK) {
+                val data: Intent? = result.data
+                val selectedImageUri: Uri? = data?.data
+                manejadorImagenes
+                imageView.setImageURI(selectedImageUri)
+            }
         }
 
         botonCargarFoto.setOnClickListener {
@@ -125,23 +128,6 @@ class AddHobbieAppActivity : AppCompatActivity() {
             finish()
         }
 
-    }
-
-    private fun byteArrayToBitmap(byteArray: ByteArray): Bitmap {
-        return BitmapFactory.decodeByteArray(byteArray, 0, byteArray.size)
-    }
-
-    private fun imagenAByteArray(imageView: ImageView): ByteArray {
-        val drawable = imageView.drawable
-        if (drawable != null && drawable is BitmapDrawable) {
-            val bitmap = drawable.bitmap
-            val stream = ByteArrayOutputStream()
-            bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream)
-            return stream.toByteArray()
-        } else {
-            Log.e("imagenAByteArray", "Drawable is null or not a BitmapDrawable")
-            return ByteArray(0) // Return an empty byte array or handle the error as needed
-        }
     }
 
     private fun obtenerImagenHobbie(hobbie: Hobbie) : ByteArray {

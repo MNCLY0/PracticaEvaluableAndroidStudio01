@@ -14,21 +14,27 @@
         android:layout_height="wrap_content"
         android:paddingBottom="10dp"
         android:text="Nombre hobbie"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.01999998" />
 
     <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/imgCreateHobbie"
-        android:layout_width="0dp"
-        android:layout_height="212dp"
-        android:background="@android:drawable/ic_menu_upload"
+        android:layout_width="339dp"
+        android:layout_height="211dp"
+        android:background="@drawable/baseline_file_upload_24"
+        android:backgroundTint="@color/md_theme_onBackground"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/lblMensajeAddHobbie"
-        app:layout_constraintVertical_bias="0.0">
+        app:layout_constraintVertical_bias="0.0"
+        app:shapeAppearance="@style/ShapeAppearance.Material3.Corner.Medium"
+        app:strokeColor="@color/md_theme_onBackground"
+        app:strokeWidth="1dp">
 
     </com.google.android.material.imageview.ShapeableImageView>
 
@@ -39,7 +45,7 @@
         android:text="Cargar imagen"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.93"
+        app:layout_constraintHorizontal_bias="0.88"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imgCreateHobbie"
         app:layout_constraintVertical_bias="0.00999999" />

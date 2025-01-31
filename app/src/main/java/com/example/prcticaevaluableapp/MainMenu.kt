@@ -1,17 +1,17 @@
 package com.example.prcticaevaluableapp
 
-import android.content.Intent
 import android.database.sqlite.SQLiteDatabase
+import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import android.view.Menu
-import android.view.MenuItem
 import android.view.View
 import android.widget.Button
 import androidx.appcompat.widget.Toolbar
 import androidx.viewpager.widget.ViewPager
 import com.example.prcticaevaluableapp.DB.DBConexion
+import com.google.android.material.imageview.ShapeableImageView
 import com.google.android.material.tabs.TabLayout
 
 class MainMenu : AppCompatActivity() {
@@ -22,7 +22,7 @@ class MainMenu : AppCompatActivity() {
     private lateinit var toolbar : Toolbar
 
     private lateinit var viewHobbies : View
-
+    private val manejadorImagenes: ManejadorImagenes = ManejadorImagenes()
     private lateinit var botonAddHobbie : Button
 
 
@@ -43,7 +43,13 @@ class MainMenu : AppCompatActivity() {
         usuarioLogged = intent.getSerializableExtra("usuario") as Usuario
         println("Usuario logged? ${usuarioLogged.nombre}")
 
-        setSupportActionBar(toolbar);
+        conexion = DBConexion(this);
+        db = conexion!!.writableDatabase
+
+        usuarioLogged.imagen = conexion!!.obtenerFotoUsuario(db,usuarioLogged)
+
+        setSupportActionBar(toolbar)
+
         val controlador = ControladorVentanasDeslizantes(supportFragmentManager)
 
         val hobbiesFragment = HobbiesFragment()
@@ -65,31 +71,9 @@ class MainMenu : AppCompatActivity() {
 //    Ponemos el menu
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.menu_main, menu)
-        menu?.findItem(R.id.nombreUser)?.setTitle(usuarioLogged.nombre)
-
+        //Ponemos la imagen del usuario en el toolbar
+        findViewById<ShapeableImageView>(R.id.fotoPerfilMainMenu).setBackgroundDrawable(manejadorImagenes.byteArrayToDrawable(this, usuarioLogged.imagen))
         return true
-    }
-
-//    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-////        return when (item.itemId) {
-////            //El boton de mostrar informacion, lanza el intent InformacionAppActivity
-////            R.id.btnInformacionApp -> {
-////                lanzarInformacionDe()
-////                true
-////            }
-////            else -> super.onOptionsItemSelected(item)
-////        }
-//    }
-
-    private fun lanzarInformacionDe(view: View? = null) {
-        val i = Intent(this, InformacionAppActivity::class.java)
-        startActivity(i)
-    }
-
-
-    private fun introducirHobbiesARecycler()
-    {
-        val hobbies = usuarioLogged.hobbies
     }
 
 
