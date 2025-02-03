@@ -26,13 +26,14 @@ class ManejadorImagenes {
     fun imagenToByteArray(imageView: ImageView): ByteArray {
         val drawable = imageView.drawable
         if (drawable != null && drawable is BitmapDrawable) {
-            //Como el cursor de la base de datos no puede almacenar más de 1MB, comprimimos la imagen a 0.5MB para que no haya problemas
+            //Como el cursor de la base de datos no puede almacenar más de 1MB, comprimimos la imagen a 0.5MB (aproximadamente) para que no haya problemas
             val bitmap =  drawable.bitmap
             var quality = 100
             do {
                 val stream = ByteArrayOutputStream()
                 bitmap.compress(Bitmap.CompressFormat.JPEG, quality, stream)
                 val byteArray = stream.toByteArray()
+                // Si el tamaño de la imagen es menor o igual a 500KB, devolvemos el byteArray
                 if (byteArray.size <= 500 * 1024) {
                     Log.e("ManejadorImagenes", "El tamaño de la imagen ahora mismo es de ${byteArray.size} bytes")
                     return byteArray
