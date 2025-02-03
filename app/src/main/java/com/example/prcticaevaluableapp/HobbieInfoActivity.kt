@@ -13,12 +13,13 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.palette.graphics.Palette
 import com.example.prcticaevaluableapp.DB.DBConexion
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textview.MaterialTextView
 
 class HobbieInfoActivity : AppCompatActivity() {
 
 //    lateinit var textViewNombreHobbie : MaterialTextView
-    lateinit var textViewDescHobbie : MaterialTextView
+    lateinit var textViewDescHobbie : TextInputEditText
     lateinit var imageviewHobbie : ImageView
     lateinit var botonEditar : FloatingActionButton
     lateinit var botonBorrar : FloatingActionButton
@@ -43,7 +44,7 @@ class HobbieInfoActivity : AppCompatActivity() {
         hobbie = intent.getSerializableExtra("hobbie") as Hobbie
 
 //        textViewNombreHobbie.text = hobbie.nombre
-        textViewDescHobbie.text = hobbie.descripcion
+        textViewDescHobbie.setText(hobbie.descripcion)
         val imagenBitmap = manejadorImagenes.byteArrayToBitmap(obtenerImagenHobbie(hobbie))
         imageviewHobbie.setImageBitmap(imagenBitmap)
         toolbar.setTitle("Hobbie: ${hobbie.nombre}")
@@ -100,7 +101,7 @@ class HobbieInfoActivity : AppCompatActivity() {
         super.onResume()
         actualizarInfoHobbie()
 //        textViewNombreHobbie.text = hobbie.nombre
-        textViewDescHobbie.text = hobbie.descripcion
+        textViewDescHobbie.setText(hobbie.descripcion)
         val imagenBitmap = manejadorImagenes.byteArrayToBitmap(hobbie.imagen)
         imageviewHobbie.setImageBitmap(imagenBitmap)
     }

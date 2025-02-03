@@ -71,7 +71,6 @@ class AddHobbieAppActivity : AppCompatActivity() {
             idUsuario = hobbie.idUsuario
             lblMensajeAddHobbie.text = "Editar hobbie ${hobbie.nombre}"
             botonSalirSinGuardar.text = "Descartar cambios"
-
         }
 
         botonSalirYGuardar.setOnClickListener {

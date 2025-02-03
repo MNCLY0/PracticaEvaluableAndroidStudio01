@@ -25,7 +25,7 @@
             android:label="@string/title_activity_view_hobbie_info"
             android:theme="@style/AppTheme_night" />
         <activity
-            android:name=".MainActivity"
+            android:name=".Login"
             android:exported="true"
             android:theme="@style/AppTheme_night">
             <intent-filter>
@@ -36,9 +36,6 @@
         </activity>
         <activity
             android:name=".MainMenu"
-            android:exported="false" />
-        <activity
-            android:name=".InformacionAppActivity"
             android:exported="false" />
         <activity
             android:name=".AddHobbieAppActivity"

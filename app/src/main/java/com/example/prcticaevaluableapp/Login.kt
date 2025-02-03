@@ -2,7 +2,6 @@ package com.example.prcticaevaluableapp
 
 import android.annotation.SuppressLint
 import android.content.Intent
-import android.database.CursorWindow
 import android.database.sqlite.SQLiteDatabase
 import android.os.Bundle
 import android.util.Log
@@ -16,10 +15,9 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.prcticaevaluableapp.DB.DBConexion
 import com.google.android.material.textview.MaterialTextView
-import java.lang.reflect.Field
 
 
-class MainActivity : AppCompatActivity() {
+class Login : AppCompatActivity() {
 
 
     private lateinit var inputUser: EditText
