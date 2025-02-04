@@ -31,20 +31,21 @@ class HobbiesFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         val rootView: View = inflater.inflate(R.layout.fragment_hobbies, container, false)
-        usuarioLogged = arguments?.getSerializable("usuario") as Usuario
-        recyclerView = rootView.findViewById(R.id.recyclerViewHobbies)
-        recyclerView.layoutManager = LinearLayoutManager(context)
+
+        inicializarLateinits(rootView)
 
         iniciarRecogidaDatos()
 
-        botonAddHobbie = rootView.findViewById(R.id.floatingButtonAddHobby);
-
-        botonAddHobbie.setOnClickListener{
-            val intent = Intent(context,AddHobbieAppActivity::class.java)
-            startActivity(intent)
-        }
-
+        inicializarInteracciones()
         return rootView
+    }
+
+    private fun inicializarLateinits(rootView : View)
+    {
+        usuarioLogged = arguments?.getSerializable("usuario") as Usuario
+        recyclerView = rootView.findViewById(R.id.recyclerViewHobbies)
+        recyclerView.layoutManager = LinearLayoutManager(context)
+        botonAddHobbie = rootView.findViewById(R.id.floatingButtonAddHobby);
     }
 
     override fun onResume() {
@@ -78,6 +79,14 @@ class HobbiesFragment : Fragment() {
             mAdapter = ControladorRecyclerViewHobbies(listaHobbies)
             recyclerView.adapter = mAdapter
 
+        }
+    }
+
+    private fun inicializarInteracciones()
+    {
+        botonAddHobbie.setOnClickListener{
+            val intent = Intent(context,AddHobbieAppActivity::class.java)
+            startActivity(intent)
         }
     }
 }

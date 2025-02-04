@@ -38,21 +38,38 @@ class Login : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
 
+        inicializarLateinits()
+
+        inicializarGif("https://media.tenor.com/3NP3M9aViooAAAAi/duck-waddling.gif")
+
+        inicializarInteracciones()
+    }
+
+    private fun inicializarLateinits()
+    {
         inputUser = findViewById(R.id.loginuser)
         inputPassword = findViewById(R.id.loginpassword)
         botonAceptar = findViewById(R.id.botonAceptar)
         botonCrearCuenta = findViewById(R.id.loginPulsaParaCrear)
 //        botonSalir = findViewById(R.id.botonSalir)
         webViewGif = findViewById(R.id.webViewLogin)
+    }
 
-
+    //Función que inicializa el gif en el webview con la ruta que le pasamos
+    private fun inicializarGif(ruta: String)
+    {
         webViewGif.settings.cacheMode = WebSettings.LOAD_NO_CACHE // Deshabilita la caché
         @SuppressLint("SetJavaScriptEnabled")
         webViewGif.settings.javaScriptEnabled = true
         webViewGif.settings.useWideViewPort = true
         webViewGif.settings.loadWithOverviewMode = true
         webViewGif.webViewClient = WebViewClient()
-        webViewGif.loadUrl("https://media.tenor.com/3NP3M9aViooAAAAi/duck-waddling.gif")
+        webViewGif.loadUrl(ruta)
+    }
+
+    //Función que inicializa las interacciones de los botones de la actividad
+    private fun inicializarInteracciones()
+    {
         //Boton aceptar comprueba el login
         botonAceptar.setOnClickListener{
             //Si el login es correcto se hace un intent de la clase MainMenu y le paso por put extra el nombre de usuario
@@ -77,24 +94,7 @@ class Login : AppCompatActivity() {
         botonCrearCuenta.setOnClickListener{
             val intent = Intent(this,CrearCuentaActivity::class.java)
             startActivity(intent)
-//            val intento = tryCrearCuenta()
-//
-//            if (intento.nombre.isNotBlank() and intento.nombre.isNotBlank())
-//            {
-//                val toast = Toast.makeText(this,"¡Cuenta creada con exito, bienvenido ${intento.nombre}!", Toast.LENGTH_SHORT)
-//                toast.show()
-//            }
-//            else
-//            {
-//                val toast = Toast.makeText(this,"Error al crear cuenta, el usuario ${intento.nombre} ya existe en la base de datos.", Toast.LENGTH_SHORT)
-//                toast.show()
-//            }
         }
-
-//        //Boton salir cierra la app
-//        botonSalir.setOnClickListener{
-//            exitProcess(0)
-//        }
     }
 
 
@@ -105,8 +105,7 @@ class Login : AppCompatActivity() {
         val nombreUser = inputUser.getText().toString()
         val passwordUser = inputPassword.getText().toString()
 
-        //En caso de que el usuario exista como clave en el diccionario, se comprueba la igualdad en la contraseña
-        //en caso contrario se devuelve false sin comprobar la contraseña
+        // Si los campos no están vacíos compruebo el login en la base de datos
         if (nombreUser.isNotBlank() and passwordUser.isNotBlank())
         {
             conexion = DBConexion(this);
@@ -115,11 +114,13 @@ class Login : AppCompatActivity() {
             val usuariocheck = Usuario(0,nombreUser,passwordUser,"".toByteArray())
             val usuarioCheked = conexion!!.checkUsuarioLogin(db,usuariocheck)
             Log.i("APLICACIONTEST:", "onCreate: se comprueba el usuario ${usuarioCheked.nombre} en la base de datos y se compara el nombre con el usuario ${usuariocheck.nombre}")
+            //Si el nombre de usuario es igual al que devuelve la base de datos devuelvo el usuario
             if (usuariocheck.nombre == usuarioCheked.nombre)
             {
                 return usuarioCheked
             }
         }
+        //Si no devuelvo un usuario vacío
         return Usuario(0,"","", "".toByteArray())
     }
 

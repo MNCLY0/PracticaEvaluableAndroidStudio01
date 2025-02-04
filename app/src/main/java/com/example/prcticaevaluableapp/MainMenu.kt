@@ -34,22 +34,39 @@ class MainMenu : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_mainmenu)
 
-        ventanaDeslizante = findViewById(R.id.viewpager)
-        tablayout = findViewById(R.id.tabLayout)
-        toolbar = findViewById(R.id.toolbarMainMenu)
+        inicializarLateinits()
 
         @Suppress("DEPRECATION")
         Log.i(R.string.app_name.toString(), "Se procede a serializar el usuario")
         usuarioLogged = intent.getSerializableExtra("usuario") as Usuario
         println("Usuario logged? ${usuarioLogged.nombre}")
 
-        conexion = DBConexion(this);
-        db = conexion!!.writableDatabase
-
-        usuarioLogged.imagen = conexion!!.obtenerFotoUsuario(db,usuarioLogged)
+        obtenerImagenUsuario()
 
         setSupportActionBar(toolbar)
 
+        inicializarTablayout()
+
+    }
+
+    private fun inicializarLateinits()
+    {
+        ventanaDeslizante = findViewById(R.id.viewpager)
+        tablayout = findViewById(R.id.tabLayout)
+        toolbar = findViewById(R.id.toolbarMainMenu)
+    }
+
+    private fun obtenerImagenUsuario()
+    {
+        conexion = DBConexion(this)
+        db = conexion!!.writableDatabase
+
+        usuarioLogged.imagen = conexion!!.obtenerFotoUsuario(db,usuarioLogged)
+    }
+
+    //Función que inicializa el tablayout
+    private fun inicializarTablayout()
+    {
         val controlador = ControladorVentanasDeslizantes(supportFragmentManager)
 
         val hobbiesFragment = HobbiesFragment()
@@ -65,8 +82,8 @@ class MainMenu : AppCompatActivity() {
         ventanaDeslizante.adapter = controlador
 
         tablayout.setupWithViewPager(ventanaDeslizante)
-
     }
+
 
 //    Ponemos el menu
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {

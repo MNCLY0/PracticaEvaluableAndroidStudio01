@@ -44,13 +44,26 @@ class CrearCuentaActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_crear_cuenta)
+        inicializarLateinits()
+
+        registroGaleria()
+
+        inicializarInteracciones()
+
+    }
+
+    private fun inicializarLateinits()
+    {
         imagenCuenta = findViewById(R.id.fotoPerfilCrearCuenta)
         nombreUsuario = findViewById(R.id.loginuser)
         passwordUsuario = findViewById(R.id.loginpassword)
         botonCargarImagen = findViewById(R.id.loginBotonCargarImagen)
         botonCrearCuenta = findViewById(R.id.botonCrearCuenta)
         botonCancelar = findViewById(R.id.botonCancelar)
+    }
 
+    private fun registroGaleria()
+    {
         // Registro del ActivityResultLauncher para la galería de imágenes
         galleryLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
             // Procesar el resultado de la selección de la imagen de la galería
@@ -60,7 +73,11 @@ class CrearCuentaActivity : ComponentActivity() {
                 imagenCuenta.setImageURI(selectedImageUri)
             }
         }
+    }
 
+
+    private fun inicializarInteracciones()
+    {
         botonCargarImagen.setOnClickListener {
             val intent = Intent(Intent.ACTION_PICK)
             // Seleccionar solo imágenes
@@ -70,7 +87,7 @@ class CrearCuentaActivity : ComponentActivity() {
         }
 
 
-        //Boton crear cuenta crea un usuario en la base de datos y muestra un mensaje de bienvenida
+        //Boton crear cuenta crea un usuario en la base de datos
         botonCrearCuenta.setOnClickListener{
 
             if (nombreUsuario.getText().toString().trim().isBlank() or passwordUsuario.getText().toString().trim().isBlank() or (imagenCuenta.drawable == null))
@@ -81,7 +98,7 @@ class CrearCuentaActivity : ComponentActivity() {
             else
             {
                 val intento = tryCrearCuenta()
-
+                //Si el nombre que devuelve la funcion tryCrearCuenta no esta vacio, se ha creado la cuenta con exito
                 if (intento.nombre.isNotBlank() and intento.nombre.isNotBlank())
                 {
                     val toast = Toast.makeText(this,"¡Cuenta creada con exito, bienvenido ${intento.nombre}!", Toast.LENGTH_SHORT)
@@ -97,6 +114,7 @@ class CrearCuentaActivity : ComponentActivity() {
         }
     }
 
+    //Funcion que intenta crear un usuario en la base de datos y devuelve el usuario creado en caso de exito
     private fun tryCrearCuenta() : Usuario
     {
         conexion = DBConexion(this);
