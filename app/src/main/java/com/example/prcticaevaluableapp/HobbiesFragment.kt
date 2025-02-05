@@ -45,7 +45,7 @@ class HobbiesFragment : Fragment() {
         usuarioLogged = arguments?.getSerializable("usuario") as Usuario
         recyclerView = rootView.findViewById(R.id.recyclerViewHobbies)
         recyclerView.layoutManager = LinearLayoutManager(context)
-        botonAddHobbie = rootView.findViewById(R.id.floatingButtonAddHobby);
+        botonAddHobbie = rootView.findViewById(R.id.floatingButtonAddHobby)
     }
 
     override fun onResume() {

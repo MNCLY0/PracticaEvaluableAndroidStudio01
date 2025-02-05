@@ -3,9 +3,6 @@ package com.example.prcticaevaluableapp
 import android.app.Activity
 import android.content.Intent
 import android.database.sqlite.SQLiteDatabase
-import android.graphics.Bitmap
-import android.graphics.BitmapFactory
-import android.graphics.drawable.BitmapDrawable
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
@@ -19,7 +16,6 @@ import androidx.appcompat.app.AppCompatActivity
 import com.example.prcticaevaluableapp.DB.DBConexion
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textview.MaterialTextView
-import java.io.ByteArrayOutputStream
 import kotlin.properties.Delegates
 
 class AddHobbieAppActivity : AppCompatActivity() {
@@ -29,8 +25,8 @@ class AddHobbieAppActivity : AppCompatActivity() {
     private lateinit var botonCargarFoto: Button
     private lateinit var imageView: ImageView
     private lateinit var lblMensajeAddHobbie: MaterialTextView
-    private lateinit var editText_nombreHobbie: TextInputEditText
-    private lateinit var editText_descHobbie: TextInputEditText
+    private lateinit var editTextnombreHobbie: TextInputEditText
+    private lateinit var edittextDeschobbie: TextInputEditText
 
     private lateinit var galleryLauncher: ActivityResultLauncher<Intent>
 
@@ -60,8 +56,8 @@ class AddHobbieAppActivity : AppCompatActivity() {
     private fun inicializarLateinits()
     {
         lblMensajeAddHobbie = findViewById(R.id.lblMensajeAddHobbie)
-        editText_nombreHobbie = findViewById(R.id.textfield_nombreHobbie)
-        editText_descHobbie = findViewById(R.id.textfield_descHobbie)
+        editTextnombreHobbie = findViewById(R.id.textfield_nombreHobbie)
+        edittextDeschobbie = findViewById(R.id.textfield_descHobbie)
         botonCargarFoto = findViewById(R.id.button_cargarImagen)
         imageView = findViewById(R.id.imgCreateHobbie)
         botonSalirYGuardar = findViewById(R.id.button_saveHobbie)
@@ -85,8 +81,8 @@ class AddHobbieAppActivity : AppCompatActivity() {
         }
         //Si se pulsa el botón de guardar, se comprueban los campos y se añade el hobbie a la base de datos o se edita
         botonSalirYGuardar.setOnClickListener {
-            val nombreHobbie = editText_nombreHobbie.text.toString()
-            val descHobbie = editText_descHobbie.text.toString()
+            val nombreHobbie = editTextnombreHobbie.text.toString()
+            val descHobbie = edittextDeschobbie.text.toString()
             val drawable = imageView.drawable
 
             //Se comprueba que los campos no estén vacíos
@@ -148,8 +144,8 @@ class AddHobbieAppActivity : AppCompatActivity() {
         // en caso de que se vaya a editar un hobbie, se rellenan los campos con los datos del hobbie a editar
         if (intent.getBooleanExtra("isEdit", false)) {
             val hobbie = intent.getSerializableExtra("hobbie") as Hobbie
-            editText_nombreHobbie.setText(hobbie.nombre)
-            editText_descHobbie.setText(hobbie.descripcion)
+            editTextnombreHobbie.setText(hobbie.nombre)
+            edittextDeschobbie.setText(hobbie.descripcion)
             imageView.setImageBitmap(manejadorImagenes.byteArrayToBitmap(obtenerImagenHobbie(hobbie)))
             idUsuario = hobbie.idUsuario
             lblMensajeAddHobbie.text = "Editar hobbie ${hobbie.nombre}"
@@ -160,7 +156,7 @@ class AddHobbieAppActivity : AppCompatActivity() {
 
 
     private fun obtenerImagenHobbie(hobbie: Hobbie) : ByteArray {
-        conexion = DBConexion(this);
+        conexion = DBConexion(this)
         db = conexion!!.writableDatabase
         val geHobbie = conexion!!.obtenerHobbiePorId(db, hobbie.id)
         return geHobbie.imagen

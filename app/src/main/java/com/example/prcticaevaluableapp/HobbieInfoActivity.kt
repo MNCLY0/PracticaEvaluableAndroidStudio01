@@ -2,8 +2,6 @@ package com.example.prcticaevaluableapp
 
 import android.content.Intent
 import android.database.sqlite.SQLiteDatabase
-import android.graphics.Bitmap
-import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.view.MenuItem
 import android.widget.ImageView
@@ -14,17 +12,16 @@ import androidx.palette.graphics.Palette
 import com.example.prcticaevaluableapp.DB.DBConexion
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.textfield.TextInputEditText
-import com.google.android.material.textview.MaterialTextView
 
 class HobbieInfoActivity : AppCompatActivity() {
 
 //    lateinit var textViewNombreHobbie : MaterialTextView
-    lateinit var textViewDescHobbie : TextInputEditText
-    lateinit var imageviewHobbie : ImageView
-    lateinit var botonEditar : FloatingActionButton
-    lateinit var botonBorrar : FloatingActionButton
-    lateinit var toolbar: Toolbar
-    lateinit var hobbie : Hobbie
+    private lateinit var textViewDescHobbie : TextInputEditText
+    private lateinit var imageviewHobbie : ImageView
+    private lateinit var botonEditar : FloatingActionButton
+    private lateinit var botonBorrar : FloatingActionButton
+    private lateinit var toolbar: Toolbar
+    private lateinit var hobbie : Hobbie
     private var conexion: DBConexion? = null
     private var db: SQLiteDatabase? = null
     private val manejadorImagenes: ManejadorImagenes = ManejadorImagenes()
@@ -66,7 +63,7 @@ class HobbieInfoActivity : AppCompatActivity() {
 
     // Obtenemos la imagen del hobbie a partir de su ID
     private fun obtenerImagenHobbie(hobbie: Hobbie) : ByteArray {
-        conexion = DBConexion(this);
+        conexion = DBConexion(this)
         db = conexion!!.writableDatabase
         val geHobbie = conexion!!.obtenerHobbiePorId(db, hobbie.id)
         return geHobbie.imagen
@@ -82,7 +79,7 @@ class HobbieInfoActivity : AppCompatActivity() {
     }
 
     private fun actualizarInfoHobbie() {
-        conexion = DBConexion(this);
+        conexion = DBConexion(this)
         db = conexion!!.writableDatabase
         hobbie = conexion!!.obtenerHobbiePorId(db, hobbie.id)
     }

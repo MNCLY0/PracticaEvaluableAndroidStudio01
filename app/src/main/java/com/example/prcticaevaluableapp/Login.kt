@@ -28,10 +28,9 @@ class Login : AppCompatActivity() {
     private lateinit var webViewGif: WebView
 //    private lateinit var botonSalir: Button
 
-    private lateinit var textoDebug: TextView
 
-    var conexion: DBConexion? = null
-    var db: SQLiteDatabase? = null
+    private var conexion: DBConexion? = null
+    private var db: SQLiteDatabase? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
 

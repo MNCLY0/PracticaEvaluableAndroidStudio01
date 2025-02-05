@@ -1,45 +1,33 @@
 package com.example.prcticaevaluableapp
 
-import android.app.Activity
 import android.content.Intent
 import android.database.sqlite.SQLiteDatabase
 import android.net.Uri
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.ComponentActivity
-import androidx.activity.compose.setContent
-import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
 import com.example.prcticaevaluableapp.DB.DBConexion
-import com.example.prcticaevaluableapp.ui.theme.PrácticaEvaluableAppTheme
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.imageview.ShapeableImageView
 import com.google.android.material.textfield.TextInputEditText
-import com.google.android.material.textfield.TextInputLayout
 
 class CrearCuentaActivity : ComponentActivity() {
 
-    lateinit var imagenCuenta : ShapeableImageView
-    lateinit var nombreUsuario: TextInputEditText
-    lateinit var passwordUsuario: TextInputEditText
-    lateinit var botonCargarImagen: MaterialButton
-    lateinit var botonCrearCuenta: MaterialButton
-    lateinit var botonCancelar: MaterialButton
+    private lateinit var imagenCuenta : ShapeableImageView
+    private lateinit var nombreUsuario: TextInputEditText
+    private lateinit var passwordUsuario: TextInputEditText
+    private lateinit var botonCargarImagen: MaterialButton
+    private lateinit var botonCrearCuenta: MaterialButton
+    private lateinit var botonCancelar: MaterialButton
 
     private lateinit var galleryLauncher: ActivityResultLauncher<Intent>
     private val manejadorImagenes: ManejadorImagenes = ManejadorImagenes()
 
-    var conexion: DBConexion? = null
-    var db: SQLiteDatabase? = null
+    private var conexion: DBConexion? = null
+    private var db: SQLiteDatabase? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -67,7 +55,7 @@ class CrearCuentaActivity : ComponentActivity() {
         // Registro del ActivityResultLauncher para la galería de imágenes
         galleryLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
             // Procesar el resultado de la selección de la imagen de la galería
-            if (result.resultCode == Activity.RESULT_OK) {
+            if (result.resultCode == RESULT_OK) {
                 val data: Intent? = result.data
                 val selectedImageUri: Uri? = data?.data
                 imagenCuenta.setImageURI(selectedImageUri)
@@ -78,6 +66,10 @@ class CrearCuentaActivity : ComponentActivity() {
 
     private fun inicializarInteracciones()
     {
+        botonCancelar.setOnClickListener{
+            finish()
+        }
+
         botonCargarImagen.setOnClickListener {
             val intent = Intent(Intent.ACTION_PICK)
             // Seleccionar solo imágenes
@@ -117,7 +109,7 @@ class CrearCuentaActivity : ComponentActivity() {
     //Funcion que intenta crear un usuario en la base de datos y devuelve el usuario creado en caso de exito
     private fun tryCrearCuenta() : Usuario
     {
-        conexion = DBConexion(this);
+        conexion = DBConexion(this)
         db = conexion!!.writableDatabase
 
         val nombreUser = nombreUsuario.getText().toString().trim()
